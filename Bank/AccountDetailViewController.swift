@@ -15,6 +15,10 @@ class AccountDetailViewController: UITableViewController {
 	@IBOutlet weak var accountNumberLabel: UILabel!
 	@IBOutlet weak var balanceLabel: UILabel!
 	
+	@IBOutlet weak var depositAmountField: UITextField!
+	@IBOutlet weak var withdrawAmountField: UITextField!
+	
+	let moneyDelegate = UIMoneyFieldDelegate()
 	
 	func setAccount(acc: Account?) {
 		NSLog("Account set: \(acc?.number)")
@@ -26,6 +30,9 @@ class AccountDetailViewController: UITableViewController {
 			self.setAccountNumber()
 			self.setBalance()
 		}
+		
+		depositAmountField.delegate = moneyDelegate
+		withdrawAmountField.delegate = moneyDelegate
 	}
 	
 	private func setAccountNumber() {

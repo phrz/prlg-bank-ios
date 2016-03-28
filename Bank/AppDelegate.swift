@@ -44,6 +44,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BankAPIDelegate {
 			userInfo: ["status": status]
 		)
 	}
+	
+	func didEncounterAccountsError(message: String) {
+		NSLog("didEncounterAccountsError: \(message)")
+		NSLog("(no notifications implemented)")
+	}
+	
+	func didLoadAccounts(accounts: [Account]) {
+		NSLog("didLoadAccounts: (dummy)")
+		NSLog("(no notifications implemented)")
+	}
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		// Override point for customization after application launch.

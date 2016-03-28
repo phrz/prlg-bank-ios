@@ -11,11 +11,23 @@ import UIKit
 class AccountsTableViewController: UITableViewController {
 	
 	var accounts = [Account]()
+	var appDelegate: AppDelegate
+	
+	override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
+		self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+	}
+	
+	required init(coder aDecoder: NSCoder) {
+		self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+		super.init(coder: aDecoder)!
+	}
 	
 	override func viewDidLoad() {
-		accounts.append(Account(number: "0001", balance: 123.10))
-		accounts.append(Account(number: "0002", balance: 23.10))
-		accounts.append(Account(number: "0003", balance: 81.47))
+		let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+		let api = appDelegate.api
+		
+		api.loadAccounts()
 	}
 	
 	// DataSource methods

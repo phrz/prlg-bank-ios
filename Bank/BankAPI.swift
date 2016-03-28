@@ -11,6 +11,8 @@ import Foundation
 protocol BankAPIDelegate: class {
 	func didEncounterAuthError(message: String)
 	func didReceiveAuthResults(withStatus status: Int)
+	func didEncounterAccountsError(message: String)
+	func didLoadAccounts(accounts: [Account])
 }
 
 class BankAPI {
@@ -37,7 +39,7 @@ class BankAPI {
 		// Create the request with Accept and Content-Type headers, POST method
 		let req = NSMutableURLRequest(URL: authURI!)
 		req.setValue("application/json", forHTTPHeaderField: "Accept")
-		req.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+		req.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		req.HTTPMethod = "POST"
 		
 		// Build parameter body
@@ -69,5 +71,32 @@ class BankAPI {
 		}
 		
 		task.resume()
-	}
+	} // authenticate
+	
+	
+	func loadAccounts() {
+		let session = NSURLSession.sharedSession()
+		let authURI = NSURL(string: baseAPI + "/accounts.php")
+		
+		// Create the request with Accept and Content-Type headers, POST method
+		let req = NSMutableURLRequest(URL: authURI!)
+		req.setValue("application/json", forHTTPHeaderField: "Accept")
+		req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+		req.HTTPMethod = "GET"
+		
+		let task = session.dataTaskWithRequest(req) { (data, res, err) in
+			// Handle connection errors
+			if let error = err {
+				NSLog(error.localizedDescription)
+				self.delegate?.didEncounterAccountsError(error.localizedDescription)
+				return
+			}
+			
+			// Downcast NSURLResponse to NSHTTPResponse
+			//let httpRes = res as! NSHTTPURLResponse
+			self.delegate?.didLoadAccounts([])
+		}
+		task.resume()
+	} // loadAccounts
+	
 }

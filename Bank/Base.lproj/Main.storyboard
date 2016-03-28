@@ -270,6 +270,8 @@
                     <connections>
                         <outlet property="accountNumberLabel" destination="WXO-Sw-5uF" id="ZzD-VN-fP7"/>
                         <outlet property="balanceLabel" destination="KPb-XR-pVa" id="rRM-ra-u6g"/>
+                        <outlet property="depositAmountField" destination="D1s-XR-rDa" id="IO3-5U-VYV"/>
+                        <outlet property="withdrawAmountField" destination="uO6-Fq-b7m" id="dXP-nL-Xud"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vbc-4g-FW6" userLabel="First Responder" sceneMemberID="firstResponder"/>
