@@ -91,10 +91,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 	
 	func authErrorCallback(notification: NSNotification) {
 		let info = notification.userInfo
-		let message = info!["message"]
+		let message = info!["message"] as! String
 		NSLog("authErrorCallback")
 		
-		NSLog("callback: message '\(message)'")
+		displayAuthError(message)
 		
 		reenableLoginForm()
 	}
@@ -104,16 +104,49 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 		let status = info!["status"]
 		NSLog("authResultsCallback")
 		
-		NSLog("callback: status \(status)")
+		switch status as! Int {
+		case 401:
+			displayAuthError("Check your username or password")
+		case 200:
+			NSOperationQueue.mainQueue().addOperationWithBlock() {
+				self.performSegueWithIdentifier("showAccountsSegue", sender: self)
+			}
+		default:
+			NSLog("Unknown status returned: \(status!)")
+		}
 		
 		reenableLoginForm()
 	}
 	
 	func reenableLoginForm() {
-		NSLog(NSThread.isMainThread() ? "Main" : "Not main")
-		spinner.stopAnimating()
-		loginButton.enabled = true
+		// Make UI changes FROM MAIN THREAD
+		// (otherwise things like stopping the spinner
+		//  will take ages to update in the UI)
+		NSOperationQueue.mainQueue().addOperationWithBlock() {
+			self.spinner.stopAnimating()
+			self.loginButton.enabled = true
+		}
+		
 		self.submitting = false
+	}
+	
+	func displayAuthError(msg: String) {
+		NSOperationQueue.mainQueue().addOperationWithBlock() {
+			
+			let alert = UIAlertController(
+				title: "Error",
+				message: msg,
+				preferredStyle: UIAlertControllerStyle.Alert
+			)
+			alert.addAction(
+				UIAlertAction(
+					title: "OK",
+					style: UIAlertActionStyle.Default,
+					handler: nil
+				)
+			)
+			self.presentViewController(alert, animated: true, completion: nil)
+		}
 	}
 	
 	// Solution for going to next text field in login form based on

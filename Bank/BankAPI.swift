@@ -34,8 +34,21 @@ class BankAPI {
 		let session = NSURLSession.sharedSession()
 		let authURI = NSURL(string: baseAPI + "/login.php")
 		
+		// Create the request with Accept and Content-Type headers, POST method
 		let req = NSMutableURLRequest(URL: authURI!)
 		req.setValue("application/json", forHTTPHeaderField: "Accept")
+		req.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+		req.HTTPMethod = "POST"
+		
+		// Build parameter body
+		let params = ["username": username, "password": password]
+		
+		do {
+			let reqData: NSData = try NSJSONSerialization.dataWithJSONObject(params, options: NSJSONWritingOptions())
+			req.HTTPBody = reqData
+		} catch {
+			delegate?.didEncounterAuthError("JSON error")
+		}
 		
 		// HTTP connection will be made asynchronously, so we're using the
 		// delegate (observer) pattern with callbacks to handle the result in

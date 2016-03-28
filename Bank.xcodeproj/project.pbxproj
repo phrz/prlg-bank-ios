@@ -14,6 +14,8 @@
 		2741C5091CA82DB2000E5D11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2741C5071CA82DB2000E5D11 /* LaunchScreen.storyboard */; };
 		2741C5111CA83143000E5D11 /* UIFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2741C5101CA83143000E5D11 /* UIFormField.swift */; };
 		27973C411CA8CF730066AEDA /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27973C401CA8CF730066AEDA /* LoginView.swift */; };
+		27973C431CA993180066AEDA /* AccountsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27973C421CA993180066AEDA /* AccountsTableViewController.swift */; };
+		27973C451CA9943F0066AEDA /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27973C441CA9943F0066AEDA /* Account.swift */; };
 		27F594D41CA834F800226331 /* BankAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F594D31CA834F800226331 /* BankAPI.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +29,8 @@
 		2741C50A1CA82DB2000E5D11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2741C5101CA83143000E5D11 /* UIFormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFormField.swift; sourceTree = "<group>"; };
 		27973C401CA8CF730066AEDA /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		27973C421CA993180066AEDA /* AccountsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsTableViewController.swift; sourceTree = "<group>"; };
+		27973C441CA9943F0066AEDA /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		27F594D31CA834F800226331 /* BankAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,6 +66,8 @@
 			children = (
 				2741C4FE1CA82DB2000E5D11 /* AppDelegate.swift */,
 				2741C5001CA82DB2000E5D11 /* LoginViewController.swift */,
+				27973C421CA993180066AEDA /* AccountsTableViewController.swift */,
+				27973C441CA9943F0066AEDA /* Account.swift */,
 				27973C401CA8CF730066AEDA /* LoginView.swift */,
 				2741C5101CA83143000E5D11 /* UIFormField.swift */,
 				2741C5021CA82DB2000E5D11 /* Main.storyboard */,
@@ -145,10 +151,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				2741C5011CA82DB2000E5D11 /* LoginViewController.swift in Sources */,
+				27973C431CA993180066AEDA /* AccountsTableViewController.swift in Sources */,
 				2741C5111CA83143000E5D11 /* UIFormField.swift in Sources */,
 				2741C4FF1CA82DB2000E5D11 /* AppDelegate.swift in Sources */,
 				27973C411CA8CF730066AEDA /* LoginView.swift in Sources */,
 				27F594D41CA834F800226331 /* BankAPI.swift in Sources */,
+				27973C451CA9943F0066AEDA /* Account.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
