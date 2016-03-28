@@ -68,21 +68,53 @@
 		2741C4FD1CA82DB2000E5D11 /* Bank */ = {
 			isa = PBXGroup;
 			children = (
+				279D94661CA9E481005CF55C /* Interface */,
+				279D94641CA9E43B005CF55C /* Models */,
+				279D94631CA9E41A005CF55C /* Views */,
+				279D94651CA9E451005CF55C /* Controllers */,
+			);
+			path = Bank;
+			sourceTree = "<group>";
+		};
+		279D94631CA9E41A005CF55C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				27973C401CA8CF730066AEDA /* LoginView.swift */,
+				2741C5101CA83143000E5D11 /* UIFormField.swift */,
+				27973C461CA9C6510066AEDA /* AccountHeaderCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		279D94641CA9E43B005CF55C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				27973C441CA9943F0066AEDA /* Account.swift */,
+				27F594D31CA834F800226331 /* BankAPI.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		279D94651CA9E451005CF55C /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
 				2741C4FE1CA82DB2000E5D11 /* AppDelegate.swift */,
 				2741C5001CA82DB2000E5D11 /* LoginViewController.swift */,
 				27973C421CA993180066AEDA /* AccountsTableViewController.swift */,
-				27973C441CA9943F0066AEDA /* Account.swift */,
-				27973C401CA8CF730066AEDA /* LoginView.swift */,
-				2741C5101CA83143000E5D11 /* UIFormField.swift */,
-				2741C5021CA82DB2000E5D11 /* Main.storyboard */,
 				27973C481CA9CCBE0066AEDA /* AccountDetailViewController.swift */,
-				27973C461CA9C6510066AEDA /* AccountHeaderCell.swift */,
-				27F594D31CA834F800226331 /* BankAPI.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		279D94661CA9E481005CF55C /* Interface */ = {
+			isa = PBXGroup;
+			children = (
 				2741C5051CA82DB2000E5D11 /* Assets.xcassets */,
+				2741C5021CA82DB2000E5D11 /* Main.storyboard */,
 				2741C5071CA82DB2000E5D11 /* LaunchScreen.storyboard */,
 				2741C50A1CA82DB2000E5D11 /* Info.plist */,
 			);
-			path = Bank;
+			name = Interface;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
