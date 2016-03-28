@@ -16,6 +16,7 @@
 		27973C411CA8CF730066AEDA /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27973C401CA8CF730066AEDA /* LoginView.swift */; };
 		27973C431CA993180066AEDA /* AccountsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27973C421CA993180066AEDA /* AccountsTableViewController.swift */; };
 		27973C451CA9943F0066AEDA /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27973C441CA9943F0066AEDA /* Account.swift */; };
+		27973C471CA9C6510066AEDA /* AccountHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27973C461CA9C6510066AEDA /* AccountHeaderCell.swift */; };
 		27F594D41CA834F800226331 /* BankAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F594D31CA834F800226331 /* BankAPI.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		27973C401CA8CF730066AEDA /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		27973C421CA993180066AEDA /* AccountsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsTableViewController.swift; sourceTree = "<group>"; };
 		27973C441CA9943F0066AEDA /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		27973C461CA9C6510066AEDA /* AccountHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountHeaderCell.swift; sourceTree = "<group>"; };
 		27F594D31CA834F800226331 /* BankAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,6 +73,7 @@
 				27973C401CA8CF730066AEDA /* LoginView.swift */,
 				2741C5101CA83143000E5D11 /* UIFormField.swift */,
 				2741C5021CA82DB2000E5D11 /* Main.storyboard */,
+				27973C461CA9C6510066AEDA /* AccountHeaderCell.swift */,
 				27F594D31CA834F800226331 /* BankAPI.swift */,
 				2741C5051CA82DB2000E5D11 /* Assets.xcassets */,
 				2741C5071CA82DB2000E5D11 /* LaunchScreen.storyboard */,
@@ -150,6 +153,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27973C471CA9C6510066AEDA /* AccountHeaderCell.swift in Sources */,
 				2741C5011CA82DB2000E5D11 /* LoginViewController.swift in Sources */,
 				27973C431CA993180066AEDA /* AccountsTableViewController.swift in Sources */,
 				2741C5111CA83143000E5D11 /* UIFormField.swift in Sources */,
