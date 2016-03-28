@@ -130,10 +130,10 @@
             </objects>
             <point key="canvasLocation" x="1384.5" y="335.5"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Account Detail View Controller-->
         <scene sceneID="Qje-Lq-eV2">
             <objects>
-                <tableViewController id="bU3-f6-5WW" sceneMemberID="viewController">
+                <tableViewController id="bU3-f6-5WW" customClass="AccountDetailViewController" customModule="Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="mBe-ug-ByD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -176,7 +176,7 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Deposit" id="OV6-Em-z1b">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ra8-AC-UlK">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="ra8-AC-UlK">
                                         <rect key="frame" x="0.0" y="281" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ra8-AC-UlK" id="9UM-Uv-mGP">
@@ -197,7 +197,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="NSQ-yf-Cmh">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="NSQ-yf-Cmh">
                                         <rect key="frame" x="0.0" y="325" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NSQ-yf-Cmh" id="9Jw-WX-Xb6">
@@ -219,7 +219,7 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Withdraw" id="Hs0-e3-rCr">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Wz4-E5-0Jg">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Wz4-E5-0Jg">
                                         <rect key="frame" x="0.0" y="419" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wz4-E5-0Jg" id="pCL-t0-Acs">
@@ -240,7 +240,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="zr9-cg-FAk">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="zr9-cg-FAk">
                                         <rect key="frame" x="0.0" y="463" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zr9-cg-FAk" id="tap-1f-gJg">
@@ -267,6 +267,10 @@
                         </connections>
                     </tableView>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="accountNumberLabel" destination="WXO-Sw-5uF" id="ZzD-VN-fP7"/>
+                        <outlet property="balanceLabel" destination="KPb-XR-pVa" id="rRM-ra-u6g"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vbc-4g-FW6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -41,4 +41,13 @@ class AccountsTableViewController: UITableViewController {
 		
 		return cell!
 	}
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		// self.view is the table, get the index path of the current cell
+		let path: NSIndexPath = self.tableView.indexPathForSelectedRow!
+		
+		if let dest = segue.destinationViewController as? AccountDetailViewController {
+			dest.setAccount(self.accounts[path.row])
+		}
+	}
 }
