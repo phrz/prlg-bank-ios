@@ -21,11 +21,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 	override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
 		self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+		addObservers()
 	}
 	
 	required init(coder aDecoder: NSCoder) {
 		self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 		super.init(coder: aDecoder)!
+		addObservers()
 	}
 	
 	override func viewDidLoad() {
@@ -43,10 +45,28 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 		loginProcess()
 	}
 	
+	func addObservers() {
+		// Auth Error Observer
+		NSNotificationCenter.defaultCenter().addObserver(
+			self,
+		    selector: #selector(LoginViewController.authErrorCallback),
+		    name: authErrorNotification,
+		    object: nil
+		)
+		
+		// Auth Results Observer
+		NSNotificationCenter.defaultCenter().addObserver(
+			self,
+			selector: #selector(LoginViewController.authResultsCallback),
+			name: authResultsNotification,
+			object: nil
+		)
+	}
+	
 	func loginProcess() {
 		// check the submitting flag
 		guard !self.submitting else {
-			print("already submitting!")
+			NSLog("Double submission of login form prevented.")
 			return
 		}
 		
@@ -58,19 +78,42 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 		loginButton.enabled = false
 		
 		// Start the spinner
+		spinner.startAnimating()
+		
+		// Submit the form with the BankAPIHandler
 		let userValue = usernameField.text
 		let passValue = passwordField.text
 		
 		let api = self.appDelegate.api
 		
-		if api.authenticate(username: userValue, password: passValue) {
-			print("Auth success")
-		} else {
-			print("Auth failure")
-		}
+		api.authenticate(username: userValue!, password: passValue!)
+	}
+	
+	func authErrorCallback(notification: NSNotification) {
+		let info = notification.userInfo
+		let message = info!["message"]
+		NSLog("authErrorCallback")
 		
-		// Re-enable the login button
+		NSLog("callback: message '\(message)'")
 		
+		reenableLoginForm()
+	}
+	
+	func authResultsCallback(notification: NSNotification) {
+		let info = notification.userInfo
+		let status = info!["status"]
+		NSLog("authResultsCallback")
+		
+		NSLog("callback: status \(status)")
+		
+		reenableLoginForm()
+	}
+	
+	func reenableLoginForm() {
+		NSLog(NSThread.isMainThread() ? "Main" : "Not main")
+		spinner.stopAnimating()
+		loginButton.enabled = true
+		self.submitting = false
 	}
 	
 	// Solution for going to next text field in login form based on

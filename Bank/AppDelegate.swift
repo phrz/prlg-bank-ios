@@ -8,15 +8,37 @@
 
 import UIKit
 
+let authErrorNotification = "com.paulherz.authErrorNotificationKey"
+let authResultsNotification = "com.paulherz.authResultsNotificationKey"
+
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, BankAPIDelegate {
 
 	var window: UIWindow?
-	var api: BankAPIHandler
+	var api: BankAPI
 	
 	override init() {
-		self.api = BankAPIHandler()
+		self.api = BankAPI()
 		super.init()
+		self.api.delegate = self
+	}
+	
+	func didEncounterAuthError(message: String) {
+		NSLog("didEncounterAuthError: \(message)")
+		NSNotificationCenter.defaultCenter().postNotificationName(
+			authErrorNotification,
+			object: self,
+			userInfo: ["message": message]
+		)
+	}
+	
+	func didReceiveAuthResults(withStatus status: Int) {
+		NSLog("didReceiveAuthResults: \(status)")
+		NSNotificationCenter.defaultCenter().postNotificationName(
+			authResultsNotification,
+			object: self,
+			userInfo: ["status": status]
+		)
 	}
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {

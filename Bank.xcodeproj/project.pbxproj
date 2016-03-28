@@ -13,7 +13,8 @@
 		2741C5061CA82DB2000E5D11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2741C5051CA82DB2000E5D11 /* Assets.xcassets */; };
 		2741C5091CA82DB2000E5D11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2741C5071CA82DB2000E5D11 /* LaunchScreen.storyboard */; };
 		2741C5111CA83143000E5D11 /* UIFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2741C5101CA83143000E5D11 /* UIFormField.swift */; };
-		27F594D41CA834F800226331 /* BankAPIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F594D31CA834F800226331 /* BankAPIHandler.swift */; };
+		27973C411CA8CF730066AEDA /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27973C401CA8CF730066AEDA /* LoginView.swift */; };
+		27F594D41CA834F800226331 /* BankAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F594D31CA834F800226331 /* BankAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +26,8 @@
 		2741C5081CA82DB2000E5D11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2741C50A1CA82DB2000E5D11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2741C5101CA83143000E5D11 /* UIFormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFormField.swift; sourceTree = "<group>"; };
-		27F594D31CA834F800226331 /* BankAPIHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankAPIHandler.swift; sourceTree = "<group>"; };
+		27973C401CA8CF730066AEDA /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		27F594D31CA834F800226331 /* BankAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,9 +62,10 @@
 			children = (
 				2741C4FE1CA82DB2000E5D11 /* AppDelegate.swift */,
 				2741C5001CA82DB2000E5D11 /* LoginViewController.swift */,
+				27973C401CA8CF730066AEDA /* LoginView.swift */,
 				2741C5101CA83143000E5D11 /* UIFormField.swift */,
 				2741C5021CA82DB2000E5D11 /* Main.storyboard */,
-				27F594D31CA834F800226331 /* BankAPIHandler.swift */,
+				27F594D31CA834F800226331 /* BankAPI.swift */,
 				2741C5051CA82DB2000E5D11 /* Assets.xcassets */,
 				2741C5071CA82DB2000E5D11 /* LaunchScreen.storyboard */,
 				2741C50A1CA82DB2000E5D11 /* Info.plist */,
@@ -144,7 +147,8 @@
 				2741C5011CA82DB2000E5D11 /* LoginViewController.swift in Sources */,
 				2741C5111CA83143000E5D11 /* UIFormField.swift in Sources */,
 				2741C4FF1CA82DB2000E5D11 /* AppDelegate.swift in Sources */,
-				27F594D41CA834F800226331 /* BankAPIHandler.swift in Sources */,
+				27973C411CA8CF730066AEDA /* LoginView.swift in Sources */,
+				27F594D41CA834F800226331 /* BankAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
