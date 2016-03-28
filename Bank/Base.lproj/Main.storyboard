@@ -52,7 +52,7 @@
                                 <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.95686274509803915" green="0.41176470588235292" blue="0.27058823529411763" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="D5H-sf-s6w" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="1Df-En-jFg"/>
                             <constraint firstItem="D5H-sf-s6w" firstAttribute="top" secondItem="OZQ-9W-Rwq" secondAttribute="bottom" constant="24" id="54R-Id-9gm"/>
@@ -72,7 +72,7 @@
                         <outlet property="passwordField" destination="5dk-oG-lDH" id="t7z-Tf-L3r"/>
                         <outlet property="spinner" destination="Vkh-DV-v4P" id="cGe-cc-ZlH"/>
                         <outlet property="usernameField" destination="D5H-sf-s6w" id="bUl-75-ODg"/>
-                        <segue destination="Cz2-mB-dbL" kind="show" identifier="showAccountsSegue" id="BPu-jU-sxw"/>
+                        <segue destination="9nP-Ln-Htv" kind="show" identifier="showAccountsSegue" id="BPu-jU-sxw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -128,7 +128,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="98w-zC-dDD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1384.5" y="335.5"/>
+            <point key="canvasLocation" x="2196.5" y="335.5"/>
         </scene>
         <!--Account Detail View Controller-->
         <scene sceneID="Qje-Lq-eV2">
@@ -274,18 +274,19 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vbc-4g-FW6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1870.5" y="335"/>
+            <point key="canvasLocation" x="2682.5" y="334.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Accounts Tab-->
         <scene sceneID="KGE-m7-fbx">
             <objects>
-                <navigationController id="Cz2-mB-dbL" sceneMemberID="viewController">
+                <navigationController title="Accounts Tab" id="Cz2-mB-dbL" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Accounts" image="Account" selectedImage="AccountSelected" id="ycX-3M-lSC"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ygm-Vn-FN3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="barTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.95686274510000002" green="0.41176470590000003" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </textAttributes>
@@ -296,7 +297,61 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="77D-ye-LJn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="857.5" y="335.5"/>
+            <point key="canvasLocation" x="1669.5" y="335.5"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="lgd-0H-Dr5">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="9nP-Ln-Htv" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="UKa-y0-p3e">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="Cz2-mB-dbL" kind="relationship" relationship="viewControllers" id="JIa-1c-JOq"/>
+                        <segue destination="LjI-Mt-eN1" kind="relationship" relationship="viewControllers" id="pDc-34-shb"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2br-VN-7jf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="970" y="335"/>
+        </scene>
+        <!--Transfers Tab-->
+        <scene sceneID="PSf-nV-DNA">
+            <objects>
+                <tableViewController title="Transfers Tab" id="LjI-Mt-eN1" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="EAz-Ug-gZr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="mMJ-lu-EV9">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mMJ-lu-EV9" id="arx-93-sJf">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="LjI-Mt-eN1" id="eEQ-52-7r9"/>
+                            <outlet property="delegate" destination="LjI-Mt-eN1" id="ETs-qD-Qm3"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Transfers" image="Transfer" selectedImage="TransferSelected" id="ti7-cy-RYf"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3yM-Mt-QS3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="969.5" y="1233.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Account" width="50" height="50"/>
+        <image name="AccountSelected" width="50" height="50"/>
+        <image name="Transfer" width="50" height="50"/>
+        <image name="TransferSelected" width="50" height="50"/>
+    </resources>
 </document>

@@ -6,6 +6,10 @@
 //  Copyright © 2016 Paul Herz. All rights reserved.
 //
 
+// Legal
+//
+// Icon Assets from https://icons8.com/license/ (Used under CC Attr-ND 3.0 U)
+
 import UIKit
 
 let authErrorNotification = "com.paulherz.authErrorNotificationKey"
