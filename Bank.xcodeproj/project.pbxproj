@@ -19,6 +19,7 @@
 		27973C471CA9C6510066AEDA /* AccountHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27973C461CA9C6510066AEDA /* AccountHeaderCell.swift */; };
 		27973C491CA9CCBE0066AEDA /* AccountDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27973C481CA9CCBE0066AEDA /* AccountDetailViewController.swift */; };
 		279D94681CA9EA6A005CF55C /* UIMoneyFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279D94671CA9EA6A005CF55C /* UIMoneyFieldDelegate.swift */; };
+		27E91E331CAAB66400C6CCEA /* TransferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E91E321CAAB66400C6CCEA /* TransferViewController.swift */; };
 		27F594D41CA834F800226331 /* BankAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F594D31CA834F800226331 /* BankAPI.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		27973C461CA9C6510066AEDA /* AccountHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountHeaderCell.swift; sourceTree = "<group>"; };
 		27973C481CA9CCBE0066AEDA /* AccountDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountDetailViewController.swift; sourceTree = "<group>"; };
 		279D94671CA9EA6A005CF55C /* UIMoneyFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIMoneyFieldDelegate.swift; sourceTree = "<group>"; };
+		27E91E321CAAB66400C6CCEA /* TransferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferViewController.swift; sourceTree = "<group>"; };
 		27F594D31CA834F800226331 /* BankAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,6 +105,7 @@
 				2741C4FE1CA82DB2000E5D11 /* AppDelegate.swift */,
 				2741C5001CA82DB2000E5D11 /* LoginViewController.swift */,
 				27973C421CA993180066AEDA /* AccountsTableViewController.swift */,
+				27E91E321CAAB66400C6CCEA /* TransferViewController.swift */,
 				27973C481CA9CCBE0066AEDA /* AccountDetailViewController.swift */,
 				279D94671CA9EA6A005CF55C /* UIMoneyFieldDelegate.swift */,
 			);
@@ -195,6 +198,7 @@
 				27973C491CA9CCBE0066AEDA /* AccountDetailViewController.swift in Sources */,
 				279D94681CA9EA6A005CF55C /* UIMoneyFieldDelegate.swift in Sources */,
 				27973C471CA9C6510066AEDA /* AccountHeaderCell.swift in Sources */,
+				27E91E331CAAB66400C6CCEA /* TransferViewController.swift in Sources */,
 				2741C5011CA82DB2000E5D11 /* LoginViewController.swift in Sources */,
 				27973C431CA993180066AEDA /* AccountsTableViewController.swift in Sources */,
 				2741C5111CA83143000E5D11 /* UIFormField.swift in Sources */,

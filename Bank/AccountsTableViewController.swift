@@ -24,10 +24,13 @@ class AccountsTableViewController: UITableViewController {
 	}
 	
 	override func viewDidLoad() {
+		
 		let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 		let api = appDelegate.api
 		
 		api.loadAccounts()
+		self.accounts.append(Account(number: "0001", balance: 123.45))
+		self.tableView.reloadData()
 	}
 	
 	// DataSource methods
@@ -59,7 +62,9 @@ class AccountsTableViewController: UITableViewController {
 		let path: NSIndexPath = self.tableView.indexPathForSelectedRow!
 		
 		if let dest = segue.destinationViewController as? AccountDetailViewController {
-			dest.setAccount(self.accounts[path.row])
+			let detailAccount = self.accounts[path.row]
+			
+			dest.setAccount(detailAccount)
 		}
 	}
 }

@@ -27,12 +27,19 @@ class AccountDetailViewController: UITableViewController {
 	
 	override func viewDidLoad() {
 		NSOperationQueue.mainQueue().addOperationWithBlock() {
+			self.setTitle()
 			self.setAccountNumber()
 			self.setBalance()
 		}
 		
 		depositAmountField.delegate = moneyDelegate
 		withdrawAmountField.delegate = moneyDelegate
+	}
+	
+	private func setTitle() {
+		// Set navbar title dynamically based on account number
+		self.navigationController!.navigationBar.topItem!.title
+			= "#\(self.account!.number)"
 	}
 	
 	private func setAccountNumber() {

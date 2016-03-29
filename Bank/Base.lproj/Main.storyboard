@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -72,17 +73,17 @@
                         <outlet property="passwordField" destination="5dk-oG-lDH" id="t7z-Tf-L3r"/>
                         <outlet property="spinner" destination="Vkh-DV-v4P" id="cGe-cc-ZlH"/>
                         <outlet property="usernameField" destination="D5H-sf-s6w" id="bUl-75-ODg"/>
-                        <segue destination="9nP-Ln-Htv" kind="show" identifier="showAccountsSegue" id="BPu-jU-sxw"/>
+                        <segue destination="aOI-hY-JL7" kind="show" identifier="showAccountsSegue" id="d4m-mk-D8V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="244.5" y="335.5"/>
+            <point key="canvasLocation" x="264.5" y="782.5"/>
         </scene>
-        <!--Accounts Table View Controller-->
+        <!--Accounts-->
         <scene sceneID="Lna-d8-L6q">
             <objects>
-                <tableViewController title="Accounts Table View Controller" id="eyM-fv-gNW" customClass="AccountsTableViewController" customModule="Bank" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Accounts" id="eyM-fv-gNW" customClass="AccountsTableViewController" customModule="Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="13R-gB-USu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -128,12 +129,119 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="98w-zC-dDD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2196.5" y="335.5"/>
+            <point key="canvasLocation" x="1784.5" y="343.5"/>
         </scene>
-        <!--Account Detail View Controller-->
+        <!--Transfer-->
+        <scene sceneID="r10-z4-DI3">
+            <objects>
+                <tableViewController title="Transfer" id="rgB-rn-PHg" customClass="TransferViewController" customModule="Bank" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="9e8-T3-oEr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections>
+                            <tableViewSection headerTitle="Transfer Amount" id="l55-S3-Bq0">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Ay5-M2-27S">
+                                        <rect key="frame" x="0.0" y="113.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ay5-M2-27S" id="aI2-IS-Ca1">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Amount" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WtZ-bT-VYc">
+                                                    <rect key="frame" x="28" y="8" width="339" height="27.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="WtZ-bT-VYc" firstAttribute="top" secondItem="aI2-IS-Ca1" secondAttribute="topMargin" id="14w-WC-fSp"/>
+                                                <constraint firstItem="WtZ-bT-VYc" firstAttribute="leading" secondItem="aI2-IS-Ca1" secondAttribute="leadingMargin" constant="20" id="GdF-ar-42T"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="WtZ-bT-VYc" secondAttribute="trailing" id="Hmz-5e-Cy0"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="WtZ-bT-VYc" secondAttribute="bottom" id="Zqp-hb-0eK"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Transfer Accounts" id="NxL-jh-QU7">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="207" id="h63-f1-ey3">
+                                        <rect key="frame" x="0.0" y="207.5" width="375" height="207"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="h63-f1-ey3" id="mgh-G7-R15">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="206.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MkA-Jb-DEn" userLabel="To Picker">
+                                                    <rect key="frame" x="187.5" y="0.0" width="187.5" height="206.5"/>
+                                                </pickerView>
+                                                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RAA-XB-HtE" userLabel="From Picker">
+                                                    <rect key="frame" x="0.0" y="0.0" width="187.5" height="206.5"/>
+                                                </pickerView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="MkA-Jb-DEn" firstAttribute="centerX" secondItem="mgh-G7-R15" secondAttribute="centerX" multiplier="1.5" id="6EA-Bp-aDC"/>
+                                                <constraint firstItem="MkA-Jb-DEn" firstAttribute="top" secondItem="mgh-G7-R15" secondAttribute="topMargin" constant="-8" id="A5m-Ph-F62"/>
+                                                <constraint firstItem="RAA-XB-HtE" firstAttribute="top" secondItem="mgh-G7-R15" secondAttribute="topMargin" constant="-8" id="O1r-VY-KP8"/>
+                                                <constraint firstItem="MkA-Jb-DEn" firstAttribute="width" secondItem="mgh-G7-R15" secondAttribute="width" multiplier="0.5" id="Qw2-Kg-xdp"/>
+                                                <constraint firstItem="RAA-XB-HtE" firstAttribute="width" secondItem="mgh-G7-R15" secondAttribute="width" multiplier="0.5" id="ZYJ-QO-ujR"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="RAA-XB-HtE" secondAttribute="bottom" constant="-8" id="a2H-H4-kEJ"/>
+                                                <constraint firstItem="RAA-XB-HtE" firstAttribute="centerX" secondItem="mgh-G7-R15" secondAttribute="centerX" multiplier="0.5" id="dip-1R-Bx8"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="MkA-Jb-DEn" secondAttribute="bottom" constant="-8" id="m3Y-JG-nxu"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="Q4k-vy-3lk">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="qih-ff-6hI">
+                                        <rect key="frame" x="0.0" y="450.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qih-ff-6hI" id="RQI-eI-jgy">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="haL-h1-wrA">
+                                                    <rect key="frame" x="18" y="7" width="57" height="30"/>
+                                                    <state key="normal" title="Transfer"/>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="haL-h1-wrA" firstAttribute="leading" secondItem="RQI-eI-jgy" secondAttribute="leadingMargin" constant="10" id="80r-3e-nqj"/>
+                                                <constraint firstItem="haL-h1-wrA" firstAttribute="centerY" secondItem="RQI-eI-jgy" secondAttribute="centerY" id="JWF-u7-WAF"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="rgB-rn-PHg" id="qTb-8l-lmp"/>
+                            <outlet property="delegate" destination="rgB-rn-PHg" id="jU7-du-MMq"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Transfers" id="zrM-1H-fKk"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="fromAccountPicker" destination="RAA-XB-HtE" id="8fW-fw-YSh"/>
+                        <outlet property="toAccountPicker" destination="MkA-Jb-DEn" id="jKK-f8-8ky"/>
+                        <outlet property="transferAmountField" destination="WtZ-bT-VYc" id="FGg-fY-diP"/>
+                        <outlet property="transferButton" destination="haL-h1-wrA" id="9o2-xz-HdF"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f5h-qv-kja" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1784.5" y="1185.5"/>
+        </scene>
+        <!--Account Detail-->
         <scene sceneID="Qje-Lq-eV2">
             <objects>
-                <tableViewController id="bU3-f6-5WW" customClass="AccountDetailViewController" customModule="Bank" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Account Detail" id="bU3-f6-5WW" customClass="AccountDetailViewController" customModule="Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="mBe-ug-ByD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -276,13 +384,13 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vbc-4g-FW6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2682.5" y="334.5"/>
+            <point key="canvasLocation" x="2270.5" y="342.5"/>
         </scene>
-        <!--Accounts Tab-->
+        <!--Accounts Navigation Controller-->
         <scene sceneID="KGE-m7-fbx">
             <objects>
-                <navigationController title="Accounts Tab" id="Cz2-mB-dbL" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Accounts" image="Account" selectedImage="AccountSelected" id="ycX-3M-lSC"/>
+                <navigationController title="Accounts Navigation Controller" id="Cz2-mB-dbL" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Accounts" image="Account" selectedImage="AccountSelected" id="miI-MD-UEJ"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ygm-Vn-FN3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -294,117 +402,54 @@
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="eyM-fv-gNW" kind="relationship" relationship="rootViewController" id="vVC-fc-EhK"/>
+                        <segue destination="eyM-fv-gNW" kind="relationship" relationship="rootViewController" id="Ios-yk-hME"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="77D-ye-LJn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1669.5" y="335.5"/>
+            <point key="canvasLocation" x="1305.5" y="343.5"/>
         </scene>
         <!--Tab Bar Controller-->
-        <scene sceneID="lgd-0H-Dr5">
+        <scene sceneID="hEn-bs-C97">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="9nP-Ln-Htv" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="UKa-y0-p3e">
+                <tabBarController id="aOI-hY-JL7" sceneMemberID="viewController">
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="ytD-kB-B8P">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="Cz2-mB-dbL" kind="relationship" relationship="viewControllers" id="JIa-1c-JOq"/>
-                        <segue destination="LjI-Mt-eN1" kind="relationship" relationship="viewControllers" id="pDc-34-shb"/>
+                        <segue destination="Cz2-mB-dbL" kind="relationship" relationship="viewControllers" id="qYK-UV-a4N"/>
+                        <segue destination="TXt-Xh-Nkk" kind="relationship" relationship="viewControllers" id="WaQ-TN-qF6"/>
                     </connections>
                 </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2br-VN-7jf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NMd-wZ-jZK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="970" y="335"/>
+            <point key="canvasLocation" x="759.5" y="782.5"/>
         </scene>
-        <!--Transfers Tab-->
-        <scene sceneID="PSf-nV-DNA">
+        <!--Transfer Navigation Controller-->
+        <scene sceneID="8md-Nz-ed8">
             <objects>
-                <tableViewController title="Transfers Tab" id="LjI-Mt-eN1" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="EAz-Ug-gZr">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                        <sections>
-                            <tableViewSection id="5Dr-gq-O8C">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="117" id="aun-yF-afO">
-                                        <rect key="frame" x="0.0" y="35" width="375" height="117"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aun-yF-afO" id="iUO-KN-LLS">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="116.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transfers are easy." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hh2-dU-a9Z">
-                                                    <rect key="frame" x="88" y="8" width="198" height="26.5"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="198" id="Etu-zL-cVp"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="22"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Just select two accounts and provide an amount — the transfer will happen immediately." textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="33B-ik-o2H">
-                                                    <rect key="frame" x="8" y="41" width="359" height="62.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="33B-ik-o2H" firstAttribute="top" secondItem="hh2-dU-a9Z" secondAttribute="bottom" constant="6.5" id="4bK-bg-733"/>
-                                                <constraint firstItem="hh2-dU-a9Z" firstAttribute="top" secondItem="iUO-KN-LLS" secondAttribute="topMargin" id="9hZ-ve-KLM"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="33B-ik-o2H" secondAttribute="bottom" constant="5" id="Hul-3R-ftU"/>
-                                                <constraint firstItem="hh2-dU-a9Z" firstAttribute="centerX" secondItem="iUO-KN-LLS" secondAttribute="centerX" id="T6k-WK-5KA"/>
-                                                <constraint firstItem="33B-ik-o2H" firstAttribute="trailing" secondItem="iUO-KN-LLS" secondAttribute="trailingMargin" id="u06-nn-cSq"/>
-                                                <constraint firstItem="33B-ik-o2H" firstAttribute="leading" secondItem="iUO-KN-LLS" secondAttribute="leadingMargin" id="ypI-WN-uZD"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Transfer" id="3p3-G8-Qvf">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="0S8-KJ-nie">
-                                        <rect key="frame" x="0.0" y="202" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0S8-KJ-nie" id="cz0-VY-ehU">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="I8J-WW-edS">
-                                        <rect key="frame" x="0.0" y="246" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I8J-WW-edS" id="BcA-Wh-L3X">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="EoH-ho-sQh">
-                                        <rect key="frame" x="0.0" y="290" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EoH-ho-sQh" id="8lu-wa-0x5">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
-                        <connections>
-                            <outlet property="dataSource" destination="LjI-Mt-eN1" id="eEQ-52-7r9"/>
-                            <outlet property="delegate" destination="LjI-Mt-eN1" id="ETs-qD-Qm3"/>
-                        </connections>
-                    </tableView>
-                    <tabBarItem key="tabBarItem" title="Transfers" image="Transfer" selectedImage="TransferSelected" id="ti7-cy-RYf"/>
+                <navigationController title="Transfer Navigation Controller" id="TXt-Xh-Nkk" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Transfer" image="Transfer" selectedImage="TransferSelected" id="FeX-7U-7IR"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3yM-Mt-QS3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fid-np-9ro">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.95686274510000002" green="0.41176470590000003" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="rgB-rn-PHg" kind="relationship" relationship="rootViewController" id="UjJ-uf-gH9"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CZ6-hU-ltf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1669.5" y="1219.5"/>
+            <point key="canvasLocation" x="1305.5" y="1185.5"/>
         </scene>
     </scenes>
     <resources>
