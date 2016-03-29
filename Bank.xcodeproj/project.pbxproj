@@ -13,6 +13,7 @@
 		2741C5061CA82DB2000E5D11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2741C5051CA82DB2000E5D11 /* Assets.xcassets */; };
 		2741C5091CA82DB2000E5D11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2741C5071CA82DB2000E5D11 /* LaunchScreen.storyboard */; };
 		2741C5111CA83143000E5D11 /* UIFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2741C5101CA83143000E5D11 /* UIFormField.swift */; };
+		276987E81CAB242000EAB713 /* UIMoneyField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276987E71CAB242000EAB713 /* UIMoneyField.swift */; };
 		27973C411CA8CF730066AEDA /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27973C401CA8CF730066AEDA /* LoginView.swift */; };
 		27973C431CA993180066AEDA /* AccountsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27973C421CA993180066AEDA /* AccountsTableViewController.swift */; };
 		27973C451CA9943F0066AEDA /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27973C441CA9943F0066AEDA /* Account.swift */; };
@@ -32,6 +33,7 @@
 		2741C5081CA82DB2000E5D11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2741C50A1CA82DB2000E5D11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2741C5101CA83143000E5D11 /* UIFormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFormField.swift; sourceTree = "<group>"; };
+		276987E71CAB242000EAB713 /* UIMoneyField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIMoneyField.swift; sourceTree = "<group>"; };
 		27973C401CA8CF730066AEDA /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		27973C421CA993180066AEDA /* AccountsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsTableViewController.swift; sourceTree = "<group>"; };
 		27973C441CA9943F0066AEDA /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 			children = (
 				27973C401CA8CF730066AEDA /* LoginView.swift */,
 				2741C5101CA83143000E5D11 /* UIFormField.swift */,
+				276987E71CAB242000EAB713 /* UIMoneyField.swift */,
 				27973C461CA9C6510066AEDA /* AccountHeaderCell.swift */,
 			);
 			name = Views;
@@ -206,6 +209,7 @@
 				27973C411CA8CF730066AEDA /* LoginView.swift in Sources */,
 				27F594D41CA834F800226331 /* BankAPI.swift in Sources */,
 				27973C451CA9943F0066AEDA /* Account.swift in Sources */,
+				276987E81CAB242000EAB713 /* UIMoneyField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,10 +323,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Bank/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.paulherz.Bank;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -331,10 +337,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Bank/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.paulherz.Bank;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

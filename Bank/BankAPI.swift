@@ -12,12 +12,14 @@ protocol BankAPIDelegate: class {
 	func didEncounterAuthError(message: String)
 	func didReceiveAuthResults(withStatus status: Int)
 	func didEncounterAccountsError(message: String)
-	func didLoadAccounts(accounts: [Account])
+	func didLoadAccounts()
 }
 
 class BankAPI {
 	
 	let baseAPI = "http://paulherz.com/bank"
+	var nonce: String?
+	var accountsCache = [Account]()
 	
 	weak var delegate: BankAPIDelegate?
 	
@@ -78,6 +80,8 @@ class BankAPI {
 		let session = NSURLSession.sharedSession()
 		let authURI = NSURL(string: baseAPI + "/accounts.php")
 		
+		self.accountsCache = []
+		
 		// Create the request with Accept and Content-Type headers, POST method
 		let req = NSMutableURLRequest(URL: authURI!)
 		req.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -92,9 +96,28 @@ class BankAPI {
 				return
 			}
 			
+			// Parse the response body
+//			let dataString: NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
+			
+			do {
+				let json = try NSJSONSerialization
+					.JSONObjectWithData(data!, options: .AllowFragments)
+				
+				let accounts = json["accounts"] as? [[String: AnyObject]]
+				
+				for account in accounts! {
+					let num = account["number"] as! String
+					var bal = Double(account["balance"] as! String)!
+					bal = Double(round(100*bal)/100) // fix rounding
+					self.accountsCache.append( Account(number: num, balance: bal) )
+				}
+			} catch {
+				print("Error serializing JSON")
+			}
+			print(self.accountsCache)
 			// Downcast NSURLResponse to NSHTTPResponse
 			//let httpRes = res as! NSHTTPURLResponse
-			self.delegate?.didLoadAccounts([])
+			self.delegate?.didLoadAccounts()
 		}
 		task.resume()
 	} // loadAccounts

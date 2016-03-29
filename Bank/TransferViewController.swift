@@ -16,43 +16,32 @@ class TransferViewController: UITableViewController, UIPickerViewDelegate, UIPic
 	@IBOutlet weak var transferButton: UIButton!
 	
 	let moneyDelegate = UIMoneyFieldDelegate()
+	let appDelegate: AppDelegate
 	
 	var fromAccounts = [Account]()
 	var toAccounts = [Account]()
 	
+	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+		self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+	}
+	
+	required init?(coder aDecoder: NSCoder) {
+		self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+		super.init(coder: aDecoder)
+	}
+	
 	override func viewDidLoad() {
-		
 		NSOperationQueue.mainQueue().addOperationWithBlock() {
 			self.loadPickers()
 		}
 		
-		// Create accessory view for transfer field
-		// Based on example code:
-		// [CITE] http://stackoverflow.com/a/23904935/3592716
-		
-		let doneBar = UIToolbar(
-			frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 50)
-		)
-		
-		doneBar.items = [
-			UIBarButtonItem(barButtonSystemItem: .FlexibleSpace,
-				target: self, action: nil),
-			UIBarButtonItem(barButtonSystemItem: .Done,
-				target: self, action: #selector(TransferViewController.doneButtonPressed))
-		]
-		
-		doneBar.sizeToFit()
-		transferAmountField.inputAccessoryView = doneBar
-		
 		transferAmountField.delegate = moneyDelegate
 	}
 	
-	func doneButtonPressed() {
-		print("Done button pressed.")
-		transferAmountField.resignFirstResponder()
-	}
-	
 	func loadPickers() {
+		self.fromAccounts = self.appDelegate.api.accountsCache
+		self.toAccounts = self.appDelegate.api.accountsCache
 		
 		fromAccountPicker.dataSource = self
 		fromAccountPicker.delegate = self
@@ -62,6 +51,10 @@ class TransferViewController: UITableViewController, UIPickerViewDelegate, UIPic
 		
 		fromAccountPicker.reloadAllComponents()
 		toAccountPicker.reloadAllComponents()
+	}
+	
+	func reloadPickersFromCache() {
+		self.appDelegate
 	}
 	
 	// MARK: UIPickerViewDataSource protocol

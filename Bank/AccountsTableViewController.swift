@@ -13,14 +13,23 @@ class AccountsTableViewController: UITableViewController {
 	var accounts = [Account]()
 	var appDelegate: AppDelegate
 	
+	@IBOutlet weak var reloadButton: UIBarButtonItem!
+	
+	@IBAction func reloadButtonAction(sender: AnyObject) {
+		print("Reload button pressed")
+		self.appDelegate.api.loadAccounts()
+	}
+	
 	override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
 		self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+		addObservers()
 	}
 	
 	required init(coder aDecoder: NSCoder) {
 		self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 		super.init(coder: aDecoder)!
+		addObservers()
 	}
 	
 	override func viewDidLoad() {
@@ -29,8 +38,42 @@ class AccountsTableViewController: UITableViewController {
 		let api = appDelegate.api
 		
 		api.loadAccounts()
-		self.accounts.append(Account(number: "0001", balance: 123.45))
-		self.tableView.reloadData()
+	}
+	
+	func addObservers() {
+		// Accounts Loaded Observer
+		NSNotificationCenter.defaultCenter().addObserver(
+			self,
+			selector: #selector(AccountsTableViewController.accountsLoadedCallback),
+			name: accountsLoadedNotification,
+			object: nil
+		)
+		
+		// Accounts Error Observer
+		NSNotificationCenter.defaultCenter().addObserver(
+			self,
+			selector: #selector(AccountsTableViewController.accountsErrorCallback),
+			name: accountsErrorNotification,
+			object: nil
+		)
+	}
+	
+	func accountsLoadedCallback() {
+		print("accountsLoadedCallback:")
+		reloadAccountsTableFromCache()
+	}
+	
+	func accountsErrorCallback() {
+		print("accountsErrorCallback:")
+	}
+	
+	func reloadAccountsTableFromCache() {
+		NSOperationQueue.mainQueue().addOperationWithBlock() {
+			self.accounts = self.appDelegate.api.accountsCache
+			print("loading accounts from API cache...")
+			print(self.accounts)
+			self.tableView.reloadData()
+		}
 	}
 	
 	// DataSource methods

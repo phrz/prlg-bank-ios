@@ -15,6 +15,9 @@ import UIKit
 let authErrorNotification = "com.paulherz.authErrorNotificationKey"
 let authResultsNotification = "com.paulherz.authResultsNotificationKey"
 
+let accountsErrorNotification = "com.paulherz.accountsErrorNotificationKey"
+let accountsLoadedNotification = "com.paulherz.accountsLoadedNotifcationKey"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, BankAPIDelegate {
 
@@ -47,12 +50,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BankAPIDelegate {
 	
 	func didEncounterAccountsError(message: String) {
 		NSLog("didEncounterAccountsError: \(message)")
-		NSLog("(no notifications implemented)")
+		NSNotificationCenter.defaultCenter().postNotificationName(
+			accountsErrorNotification,
+			object: self,
+			userInfo: ["message": message]
+		)
 	}
 	
-	func didLoadAccounts(accounts: [Account]) {
-		NSLog("didLoadAccounts: (dummy)")
-		NSLog("(no notifications implemented)")
+	func didLoadAccounts() {
+		NSLog("didLoadAccounts:")
+		NSNotificationCenter.defaultCenter().postNotificationName(
+			accountsLoadedNotification,
+			object: self
+		)
 	}
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
