@@ -22,7 +22,8 @@ protocol LoggerItemProtocol {
 }
 
 protocol LoggerLocationProtocol {
-	mutating func logTo(itemContent: String)
+	init(verbose: Bool)
+	func logTo(itemContent: String)
 }
 
 struct LoggerItem: LoggerItemProtocol {
@@ -42,42 +43,71 @@ struct LoggerItem: LoggerItemProtocol {
 			tempDesc += " \(message!)"
 		}
 		
+		tempDesc += "\n"
+		
 		return tempDesc
 	}
 }
 
-struct ConsoleLocation: LoggerLocationProtocol {
+class ConsoleLocation: LoggerLocationProtocol {
+	var verbose: Bool
+	
+	required init(verbose: Bool) {
+		self.verbose = verbose
+		if(self.verbose) {
+			print("[LOGGER] Now logging to console...")
+		}
+	}
+	
 	func logTo(itemContent: String) {
 		print(itemContent)
 	}
 }
 
-struct FileLocation: LoggerLocationProtocol {
+class FileLocation: LoggerLocationProtocol {
+	
 	var logFilePath: String
+	var verbose: Bool
+	
 	// Defer file handle establishment until first use (lazy)
 	lazy var logFileHandle: NSFileHandle? = {
 		let logFileHandle = NSFileHandle.init(forWritingAtPath: self.logFilePath)
 		return logFileHandle
 	}()
 	
-	init() {
+	required init(verbose: Bool) {
+		// Set verbose flag
+		self.verbose = verbose
+		
+		if(self.verbose) {
+			print("[LOGGER] logger set to verbose, will log metadata to console")
+		}
 		// Generate the file path
 		let dir: NSString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
 		self.logFilePath = dir.stringByAppendingPathComponent("log.txt")
 		// Create logfile if it doesn't exist
 		if(!NSFileManager.defaultManager().fileExistsAtPath(logFilePath)) {
-			print("Creating logfile...")
+			if(self.verbose) {
+				print("[LOGGER] creating log file")
+			}
 			NSFileManager.defaultManager().createFileAtPath(logFilePath, contents: nil, attributes: nil)
-		} else {
-			print("logfile exists")
+		}
+		// Print log file path if verbose
+		if(self.verbose) {
+			print("[LOGGER] Now logging to file (\(self.logFilePath))")
 		}
 	}
 	
-	mutating func logTo(itemContent: String) {
+	func logTo(itemContent: String) {
 		if let logFileHandle = logFileHandle {
 			let data = itemContent.dataUsingEncoding(NSUTF8StringEncoding)
+			logFileHandle.seekToEndOfFile()
 			logFileHandle.writeData(data!)
 		}
+	}
+	
+	deinit {
+		logFileHandle?.closeFile()
 	}
 }
 
@@ -86,11 +116,12 @@ class Logger {
 	static let sharedInstance = Logger()
 	static let loggerIdentifier = "com.paulherz.Bank.Logger"
 	
-	var locations = [LoggerLocationProtocol]()
+	private var locations = [LoggerLocationProtocol]()
+	internal var verbose: Bool = false
 	
 	// add a location to the locations array
-	func register(location: LoggerLocationProtocol) {
-		locations.append(location)
+	func register(location: LoggerLocationProtocol.Type) {
+		locations.append(location.init(verbose: self.verbose))
 	}
 	
 	// Instantiate the queue only upon first use
@@ -110,7 +141,7 @@ class Logger {
 	// Enqueue a message into the log queue
 	func log(item: LoggerItemProtocol) {
 		self.messageQueue.addOperationWithBlock {
-			for var location in self.locations {
+			for location in self.locations {
 				location.logTo(item.description())
 			}
 		}

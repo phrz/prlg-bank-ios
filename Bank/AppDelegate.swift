@@ -29,12 +29,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BankAPIDelegate {
 		super.init()
 		self.api.delegate = self
 		
-		Logger.sharedInstance.register(ConsoleLocation())
-		Logger.sharedInstance.register(FileLocation())
+		Logger.sharedInstance.verbose = true
+		Logger.sharedInstance.register(ConsoleLocation)
+		Logger.sharedInstance.register(FileLocation)
 	}
 	
 	func didEncounterAuthError(message: String) {
-		NSLog("didEncounterAuthError: \(message)")
+		Logger.sharedInstance.log("didEncounterAuthError: \(message)", sender: self, level: .Error)
 		NSNotificationCenter.defaultCenter().postNotificationName(
 			authErrorNotification,
 			object: self,
@@ -52,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BankAPIDelegate {
 	}
 	
 	func didEncounterAccountsError(message: String) {
-		NSLog("didEncounterAccountsError: \(message)")
+		Logger.sharedInstance.log("didEncounterAccountsError: \(message)", sender: self, level: .Error)
 		NSNotificationCenter.defaultCenter().postNotificationName(
 			accountsErrorNotification,
 			object: self,
@@ -61,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BankAPIDelegate {
 	}
 	
 	func didLoadAccounts() {
-		NSLog("didLoadAccounts:")
+		Logger.sharedInstance.log("didLoadAccounts:", sender: self)
 		NSNotificationCenter.defaultCenter().postNotificationName(
 			accountsLoadedNotification,
 			object: self

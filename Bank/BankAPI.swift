@@ -60,7 +60,7 @@ class BankAPI {
 		let task = session.dataTaskWithRequest(req) { (data, res, err) in
 			// Handle connection errors
 			if let error = err {
-				NSLog(error.localizedDescription)
+				Logger.sharedInstance.log(error.localizedDescription, sender: self, level: .Error)
 				self.delegate?.didEncounterAuthError(error.localizedDescription)
 				return
 			}
@@ -91,7 +91,7 @@ class BankAPI {
 		let task = session.dataTaskWithRequest(req) { (data, res, err) in
 			// Handle connection errors
 			if let error = err {
-				NSLog(error.localizedDescription)
+				Logger.sharedInstance.log(error.localizedDescription, sender: self, level: .Error)
 				self.delegate?.didEncounterAccountsError(error.localizedDescription)
 				return
 			}
@@ -112,9 +112,9 @@ class BankAPI {
 					self.accountsCache.append( Account(number: num, balance: bal) )
 				}
 			} catch {
-				print("Error serializing JSON")
+				Logger.sharedInstance.log("Error serializing JSON", sender: self, level: .Error)
 			}
-			print(self.accountsCache)
+			
 			// Downcast NSURLResponse to NSHTTPResponse
 			//let httpRes = res as! NSHTTPURLResponse
 			self.delegate?.didLoadAccounts()

@@ -42,7 +42,8 @@ class UIMoneyField: UIFormField {
 	}
 	
 	func doneButtonPressed() {
-		print("Done button pressed.")
+		Logger.sharedInstance.log("Numpad `Done` button pressed.", sender: self)
+		Logger.sharedInstance.log("Resigning first responder (dismissing keyboard)...", sender: self)
 		self.resignFirstResponder()
 	}
 	

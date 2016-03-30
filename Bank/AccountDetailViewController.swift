@@ -21,7 +21,7 @@ class AccountDetailViewController: UITableViewController {
 	let moneyDelegate = UIMoneyFieldDelegate()
 	
 	func setAccount(acc: Account?) {
-		NSLog("Account set: \(acc?.number)")
+		Logger.sharedInstance.log("Account set: \(acc?.number)", sender: self)
 		self.account = acc
 	}
 	

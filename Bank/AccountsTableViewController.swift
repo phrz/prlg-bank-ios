@@ -16,7 +16,7 @@ class AccountsTableViewController: UITableViewController {
 	@IBOutlet weak var reloadButton: UIBarButtonItem!
 	
 	@IBAction func reloadButtonAction(sender: AnyObject) {
-		print("Reload button pressed")
+		Logger.sharedInstance.log("Reload button pressed", sender: self)
 		self.appDelegate.api.loadAccounts()
 	}
 	
@@ -59,19 +59,19 @@ class AccountsTableViewController: UITableViewController {
 	}
 	
 	func accountsLoadedCallback() {
-		print("accountsLoadedCallback:")
+		Logger.sharedInstance.log("accountsLoadedCallback:", sender: self)
 		reloadAccountsTableFromCache()
 	}
 	
 	func accountsErrorCallback() {
-		print("accountsErrorCallback:")
+		Logger.sharedInstance.log("accountsErrorCallback:", sender: self)
 	}
 	
 	func reloadAccountsTableFromCache() {
 		NSOperationQueue.mainQueue().addOperationWithBlock() {
 			self.accounts = self.appDelegate.api.accountsCache
-			print("loading accounts from API cache...")
-			print(self.accounts)
+			Logger.sharedInstance.log("copying accounts from API cache...", sender: self)
+			Logger.sharedInstance.log("\(self.accounts.count) account(s) copied", sender: self)
 			self.tableView.reloadData()
 		}
 	}

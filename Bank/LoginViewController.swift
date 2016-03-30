@@ -66,7 +66,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 	func loginProcess() {
 		// check the submitting flag
 		guard !self.submitting else {
-			NSLog("Double submission of login form prevented.")
+			Logger.sharedInstance.log("Double submission of login form prevented.", sender: self, level: .Warning)
 			return
 		}
 		
@@ -92,7 +92,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 	func authErrorCallback(notification: NSNotification) {
 		let info = notification.userInfo
 		let message = info!["message"] as! String
-		NSLog("authErrorCallback")
+		Logger.sharedInstance.log("authErrorCallback:", sender: self, level: .Error)
 		
 		displayAuthError(message)
 		
@@ -102,7 +102,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 	func authResultsCallback(notification: NSNotification) {
 		let info = notification.userInfo
 		let status = info!["status"]
-		NSLog("authResultsCallback")
+		
+		Logger.sharedInstance.log("authResultsCallback:", sender: self)
 		
 		switch status as! Int {
 		case 401:
@@ -112,7 +113,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 				self.performSegueWithIdentifier("showAccountsSegue", sender: self)
 			}
 		default:
-			NSLog("Unknown status returned: \(status!)")
+			Logger.sharedInstance.log(
+				"authResultsCallback: Unexpected HTTP status code returned: \(status!)",
+				sender: self,
+				level: .Error
+			)
 		}
 		
 		reenableLoginForm()

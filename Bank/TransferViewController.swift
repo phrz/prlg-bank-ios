@@ -69,7 +69,7 @@ class TransferViewController: UITableViewController, UIPickerViewDelegate, UIPic
 		case toAccountPicker:
 			return self.toAccounts.count + 1 // Including "To" header
 		default:
-			print("Warning: unknown picker")
+			Logger.sharedInstance.log("Unknown picker", sender: self, level: .Warning)
 			return 0
 		}
 	}
@@ -84,7 +84,7 @@ class TransferViewController: UITableViewController, UIPickerViewDelegate, UIPic
 			if(row == 0) { return "To" }
 			return self.toAccounts[row-1].number
 		default:
-			print("Warning: unknown picker")
+			Logger.sharedInstance.log("Unknown picker", sender: self, level: .Warning)
 			return ""
 		}
 	}
