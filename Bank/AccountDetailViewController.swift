@@ -19,16 +19,8 @@ class AccountDetailViewController: UITableViewController {
 		}
 	}
 	
+	
 	var accountNumber: String?
-//	var accountNumber: String? {
-//		get {
-//			return self.accountNumber
-//		}
-//		set(accNo) {
-//			Logger.sharedInstance.log("Did receive account number \(accNo)", sender: self)
-//			self.accountNumber = accNo
-//		}
-//	}
 	
 	var depositSubmitting: Bool = false
 	var withdrawSubmitting: Bool = false
@@ -167,11 +159,13 @@ class AccountDetailViewController: UITableViewController {
 	
 	@IBAction func didTouchDepositButton(sender: AnyObject) {
 		Logger.sharedInstance.log("Deposit button pressed", sender: self)
+		self.view.endEditing(true)
 		depositProcess()
 	}
 	
 	@IBAction func didTouchWithdrawButton(sender: AnyObject) {
 		Logger.sharedInstance.log("Withdraw button pressed", sender: self)
+		self.view.endEditing(true)
 		withdrawProcess()
 	}
 	
