@@ -40,8 +40,8 @@ class TransferViewController: UITableViewController, UIPickerViewDelegate, UIPic
 	}
 	
 	func loadPickers() {
-		self.fromAccounts = self.appDelegate.api.accountsCache
-		self.toAccounts = self.appDelegate.api.accountsCache
+		self.fromAccounts = Array(self.appDelegate.api.accountsCache.values)
+		self.toAccounts = self.fromAccounts
 		
 		fromAccountPicker.dataSource = self
 		fromAccountPicker.delegate = self

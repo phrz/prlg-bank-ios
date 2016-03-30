@@ -10,7 +10,25 @@ import UIKit
 
 class AccountDetailViewController: UITableViewController {
 	
-	var account: Account?
+	var account: Account? {
+		get {
+			if let accountNumber = self.accountNumber {
+				return self.appDelegate.api.accountsCache[accountNumber]
+			}
+			return nil
+		}
+	}
+	
+	var accountNumber: String?
+//	var accountNumber: String? {
+//		get {
+//			return self.accountNumber
+//		}
+//		set(accNo) {
+//			Logger.sharedInstance.log("Did receive account number \(accNo)", sender: self)
+//			self.accountNumber = accNo
+//		}
+//	}
 	
 	var depositSubmitting: Bool = false
 	var withdrawSubmitting: Bool = false
@@ -28,10 +46,24 @@ class AccountDetailViewController: UITableViewController {
 	@IBOutlet weak var withdrawSpinner: UIActivityIndicatorView!
 	
 	let moneyDelegate = UIMoneyFieldDelegate()
+	let appDelegate: AppDelegate
 	
-	func setAccount(acc: Account?) {
-		Logger.sharedInstance.log("Did receive account instance data for Account \(acc!.number)", sender: self)
-		self.account = acc
+	override init(style: UITableViewStyle) {
+		self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+		super.init(style: style)
+		self.addObservers()
+	}
+	
+	required init?(coder aDecoder: NSCoder) {
+		self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+		super.init(coder: aDecoder)
+		self.addObservers()
+	}
+	
+	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+		self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+		self.addObservers()
 	}
 	
 	override func viewDidLoad() {
@@ -44,6 +76,93 @@ class AccountDetailViewController: UITableViewController {
 		
 		depositAmountField.delegate = moneyDelegate
 		withdrawAmountField.delegate = moneyDelegate
+	}
+	
+	func depositErrorCallback(notification: NSNotification) {
+		let info = notification.userInfo
+		let message = info!["message"] as! String
+		Logger.sharedInstance.log("depositErrorCallback: \"\(message)\"", sender: self, level: .Error)
+		
+		displayTransactionError(message)
+		
+		reenableDepositForm()
+	}
+	
+	func depositResultsCallback(notification: NSNotification) {
+		let info = notification.userInfo
+		let status = info!["status"]
+		
+		Logger.sharedInstance.log("depositResultsCallback: \(status!)", sender: self)
+		
+		switch status as! Int {
+		case 409:
+			displayTransactionError("Could not complete deposit.")
+		case 200:
+			Logger.sharedInstance.log("Reloading accounts information... (TODO)", sender: self)
+		default:
+			Logger.sharedInstance.log(
+				"depositResultsCallback: Unexpected HTTP status code returned: \(status!)",
+				sender: self,
+				level: .Error
+			)
+		}
+		
+		reenableDepositForm()
+		setTitle()
+		setBalance()
+	}
+	
+	func reenableDepositForm() {
+		// Make UI changes FROM MAIN THREAD
+		// (otherwise things like stopping the spinner
+		//  will take ages to update in the UI)
+		NSOperationQueue.mainQueue().addOperationWithBlock() {
+			self.depositSpinner.stopAnimating()
+			self.depositButton.enabled = true
+		}
+		
+		self.depositSubmitting = false
+	}
+	
+	func displayTransactionError(msg: String) {
+		Logger.sharedInstance.log("displayTransactionError: \"\(msg)\"", sender: self)
+		
+		NSOperationQueue.mainQueue().addOperationWithBlock() {
+			
+			let alert = UIAlertController(
+				title: "Error",
+				message: msg,
+				preferredStyle: UIAlertControllerStyle.Alert
+			)
+			alert.addAction(
+				UIAlertAction(
+					title: "OK",
+					style: UIAlertActionStyle.Default,
+					handler: nil
+				)
+			)
+			self.presentViewController(alert, animated: true, completion: nil)
+		}
+	}
+	
+	func addObservers() {
+		Logger.sharedInstance.log("Adding observers for Auth API events...", sender: self)
+		
+		// Deposit Error Observer
+		NSNotificationCenter.defaultCenter().addObserver(
+			self,
+			selector: #selector(AccountDetailViewController.depositErrorCallback),
+			name: depositErrorNotification,
+			object: nil
+		)
+		
+		// Deposit Results Observer
+		NSNotificationCenter.defaultCenter().addObserver(
+			self,
+			selector: #selector(AccountDetailViewController.depositResultsCallback),
+			name: depositResultsNotification,
+			object: nil
+		)
 	}
 	
 	@IBAction func didTouchDepositButton(sender: AnyObject) {
@@ -74,6 +193,15 @@ class AccountDetailViewController: UITableViewController {
 		
 		// Start the spinner
 		depositSpinner.startAnimating()
+		
+		// Submit the form with the BankAPIHandler
+		let amountValue = depositAmountField.text!
+		let toAccount = self.account!.number
+		
+		Logger.sharedInstance.log("Calling API to deposit $\(amountValue) to account \(toAccount)", sender: self)
+		
+		let api = self.appDelegate.api
+		api.deposit(amountValue, toAccount: toAccount)
 	}
 	
 	private func withdrawProcess() {

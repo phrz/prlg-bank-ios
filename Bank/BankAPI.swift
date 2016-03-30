@@ -11,15 +11,19 @@ import Foundation
 protocol BankAPIDelegate: class {
 	func didEncounterAuthError(message: String)
 	func didReceiveAuthResults(withStatus status: Int)
+	
 	func didEncounterAccountsError(message: String)
 	func didLoadAccounts()
+	
+	func didEncounterDepositError(message: String)
+	func didReceiveDepositResults(withStatus status: Int)
 }
 
 class BankAPI {
 	
 	let baseAPI = "http://paulherz.com/bank"
 	var nonce: String?
-	var accountsCache = [Account]()
+	var accountsCache = [String: Account]()
 	
 	weak var delegate: BankAPIDelegate?
 	
@@ -92,7 +96,7 @@ class BankAPI {
 		let session = NSURLSession.sharedSession()
 		let authURI = NSURL(string: baseAPI + "/accounts.php")
 		
-		self.accountsCache = []
+		self.accountsCache.removeAll()
 		
 		// Create the request with Accept and Content-Type headers, POST method
 		let req = NSMutableURLRequest(URL: authURI!)
@@ -114,12 +118,15 @@ class BankAPI {
 					.JSONObjectWithData(data!, options: .AllowFragments)
 				
 				let accounts = json["accounts"] as? [[String: AnyObject]]
+				self.nonce = json["nonce"] as? String
+				
+				Logger.sharedInstance.log("Set nonce to \(self.nonce)", sender: self)
 				
 				for account in accounts! {
 					let num = account["number"] as! String
 					var bal = Double(account["balance"] as! String)!
 					bal = Double(round(100*bal)/100) // fix rounding
-					self.accountsCache.append( Account(number: num, balance: bal) )
+					self.accountsCache[num] = Account(number: num, balance: bal)
 				}
 			} catch {
 				Logger.sharedInstance.log("Error serializing JSON", sender: self, level: .Error)
@@ -132,5 +139,68 @@ class BankAPI {
 		Logger.sharedInstance.log("Resuming loadAccounts NSURLSessionDataTask", sender: self)
 		task.resume()
 	} // loadAccounts
+	
+	func stripMoneyString(text: String) -> String {
+		// String filtering solution based on:
+		// [CITE] http://stackoverflow.com/a/32851930/3592716
+		
+		let limitSet = Set("0123456789.".characters)
+		return String(text.characters.filter { limitSet.contains($0) })
+	}
+
+	
+	func deposit(amountValue: String, toAccount account: String) {
+		let session = NSURLSession.sharedSession()
+		let authURI = NSURL(string: baseAPI + "/deposit.php")
+		
+		Logger.sharedInstance.log("deposit: amountValue:\(amountValue) toAccount: \"\(account)\"", sender: self)
+		
+		// Validation
+		guard let amount = Double(stripMoneyString(amountValue)) else {
+			let error = "Cannot convert the given amountValue"
+			Logger.sharedInstance.log(error, sender: self, level: .Error)
+			delegate?.didEncounterDepositError(error)
+			return
+		}
+		
+		// Create the request with Accept and Content-Type headers, POST method
+		let req = NSMutableURLRequest(URL: authURI!)
+		req.setValue("application/json", forHTTPHeaderField: "Accept")
+		req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+		req.HTTPMethod = "POST"
+		
+		// Build parameter body
+		let params = ["amount": amount, "toAccount": account, "nonce": self.nonce!]
+		
+		do {
+			let reqData: NSData = try NSJSONSerialization.dataWithJSONObject(params, options: NSJSONWritingOptions())
+			req.HTTPBody = reqData
+		} catch {
+			Logger.sharedInstance.log("Calling didEncounterDepositError on delegate (JSON Error)", sender: self)
+			delegate?.didEncounterDepositError("JSON error")
+		}
+		
+		// HTTP connection will be made asynchronously, so we're using the
+		// delegate (observer) pattern with callbacks to handle the result in
+		// a similarly async manner.
+		let task = session.dataTaskWithRequest(req) { (data, res, err) in
+			// Handle connection errors
+			if let error = err {
+				Logger.sharedInstance.log("Calling didEncounterDepositError on delegate", sender: self)
+				Logger.sharedInstance.log(error.localizedDescription, sender: self, level: .Error)
+				self.delegate?.didEncounterDepositError(error.localizedDescription)
+				return
+			}
+			
+			// Handle status codes
+			let httpRes = res as! NSHTTPURLResponse
+			
+			Logger.sharedInstance.log("Calling didReceiveDepositResults on delegate", sender: self)
+			self.delegate?.didReceiveDepositResults(withStatus: httpRes.statusCode)
+		}
+		
+		Logger.sharedInstance.log("Resuming deposit NSURLSessionDataTask", sender: self)
+		task.resume()
+	} // deposit
 	
 }

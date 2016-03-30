@@ -18,6 +18,9 @@ let authResultsNotification = "com.paulherz.authResultsNotificationKey"
 let accountsErrorNotification = "com.paulherz.accountsErrorNotificationKey"
 let accountsLoadedNotification = "com.paulherz.accountsLoadedNotifcationKey"
 
+let depositErrorNotification = "com.paulherz.depositErrorNotificationKey"
+let depositResultsNotification = "com.paulherz.depositResultsNotificationKey"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, BankAPIDelegate {
 
@@ -68,6 +71,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BankAPIDelegate {
 		NSNotificationCenter.defaultCenter().postNotificationName(
 			accountsLoadedNotification,
 			object: self
+		)
+	}
+	
+	func didEncounterDepositError(message: String) {
+		Logger.sharedInstance.log("didEncounterDepositError:", sender: self, level: .Error)
+		NSNotificationCenter.defaultCenter().postNotificationName(
+			depositErrorNotification,
+			object: self,
+			userInfo: ["message": message]
+		)
+	}
+	
+	func didReceiveDepositResults(withStatus status: Int) {
+		Logger.sharedInstance.log("didReceiveDepositResults:", sender: self)
+		NSNotificationCenter.defaultCenter().postNotificationName(
+			depositResultsNotification,
+			object: self,
+			userInfo: ["status": status]
 		)
 	}
 

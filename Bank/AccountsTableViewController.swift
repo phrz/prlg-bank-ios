@@ -69,7 +69,7 @@ class AccountsTableViewController: UITableViewController {
 	
 	func reloadAccountsTableFromCache() {
 		NSOperationQueue.mainQueue().addOperationWithBlock() {
-			self.accounts = self.appDelegate.api.accountsCache
+			self.accounts = Array(self.appDelegate.api.accountsCache.values)
 			Logger.sharedInstance.log("copying accounts from API cache...", sender: self)
 			Logger.sharedInstance.log("\(self.accounts.count) account(s) copied", sender: self)
 			self.tableView.reloadData()
@@ -110,7 +110,7 @@ class AccountsTableViewController: UITableViewController {
 			let detailAccount = self.accounts[path.row]
 			
 			Logger.sharedInstance.log("Passing account instance data to account detail view", sender: self)
-			dest.setAccount(detailAccount)
+			dest.accountNumber = detailAccount.number
 		}
 	}
 }
