@@ -101,12 +101,15 @@ class AccountsTableViewController: UITableViewController {
 	}
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		Logger.sharedInstance.log("Preparing to segue to account detail view", sender: self)
+		
 		// self.view is the table, get the index path of the current cell
 		let path: NSIndexPath = self.tableView.indexPathForSelectedRow!
 		
 		if let dest = segue.destinationViewController as? AccountDetailViewController {
 			let detailAccount = self.accounts[path.row]
 			
+			Logger.sharedInstance.log("Passing account instance data to account detail view", sender: self)
 			dest.setAccount(detailAccount)
 		}
 	}

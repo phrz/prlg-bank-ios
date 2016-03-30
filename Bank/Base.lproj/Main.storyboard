@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -325,10 +325,22 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KaT-MJ-KKX">
                                                     <rect key="frame" x="18" y="7" width="53" height="30"/>
                                                     <state key="normal" title="Deposit"/>
+                                                    <connections>
+                                                        <action selector="didTouchDepositButton:" destination="bU3-f6-5WW" eventType="touchUpInside" id="8of-2A-nLa"/>
+                                                    </connections>
                                                 </button>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="qpP-sa-lDr">
+                                                    <rect key="frame" x="88" y="12" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="Srn-yT-tRX"/>
+                                                        <constraint firstAttribute="height" constant="20" id="gTS-Do-Pg3"/>
+                                                    </constraints>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="qpP-sa-lDr" firstAttribute="centerY" secondItem="9Jw-WX-Xb6" secondAttribute="centerY" id="1Ig-VD-24U"/>
                                                 <constraint firstItem="KaT-MJ-KKX" firstAttribute="leading" secondItem="9Jw-WX-Xb6" secondAttribute="leadingMargin" constant="10" id="Bpo-nz-PUl"/>
+                                                <constraint firstItem="qpP-sa-lDr" firstAttribute="leading" secondItem="KaT-MJ-KKX" secondAttribute="trailing" constant="17" id="Hi9-3k-BHW"/>
                                                 <constraint firstItem="KaT-MJ-KKX" firstAttribute="centerY" secondItem="9Jw-WX-Xb6" secondAttribute="centerY" id="v9J-GT-Eqo"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -368,9 +380,21 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nQq-oP-yMR">
                                                     <rect key="frame" x="19" y="7" width="66" height="30"/>
                                                     <state key="normal" title="Withdraw"/>
+                                                    <connections>
+                                                        <action selector="didTouchWithdrawButton:" destination="bU3-f6-5WW" eventType="touchUpInside" id="8A1-Kl-1yQ"/>
+                                                    </connections>
                                                 </button>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="YZh-8k-60R">
+                                                    <rect key="frame" x="98" y="12" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="Xmb-FJ-BEp"/>
+                                                        <constraint firstAttribute="height" constant="20" id="pZP-DK-WOf"/>
+                                                    </constraints>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="YZh-8k-60R" firstAttribute="leading" secondItem="nQq-oP-yMR" secondAttribute="trailing" constant="13" id="MFh-oS-n25"/>
+                                                <constraint firstItem="YZh-8k-60R" firstAttribute="centerY" secondItem="tap-1f-gJg" secondAttribute="centerY" id="P7J-9w-nod"/>
                                                 <constraint firstItem="nQq-oP-yMR" firstAttribute="centerY" secondItem="tap-1f-gJg" secondAttribute="centerY" id="oyl-AF-haN"/>
                                                 <constraint firstItem="nQq-oP-yMR" firstAttribute="leading" secondItem="tap-1f-gJg" secondAttribute="leadingMargin" constant="11" id="uxF-0b-UR8"/>
                                             </constraints>
@@ -389,7 +413,11 @@
                         <outlet property="accountNumberLabel" destination="WXO-Sw-5uF" id="ZzD-VN-fP7"/>
                         <outlet property="balanceLabel" destination="KPb-XR-pVa" id="rRM-ra-u6g"/>
                         <outlet property="depositAmountField" destination="D1s-XR-rDa" id="IO3-5U-VYV"/>
+                        <outlet property="depositButton" destination="KaT-MJ-KKX" id="6Vx-OQ-ikB"/>
+                        <outlet property="depositSpinner" destination="qpP-sa-lDr" id="pAx-OV-NME"/>
                         <outlet property="withdrawAmountField" destination="uO6-Fq-b7m" id="dXP-nL-Xud"/>
+                        <outlet property="withdrawButton" destination="nQq-oP-yMR" id="hA2-Pj-LpJ"/>
+                        <outlet property="withdrawSpinner" destination="YZh-8k-60R" id="U1O-g5-P4z"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vbc-4g-FW6" userLabel="First Responder" sceneMemberID="firstResponder"/>

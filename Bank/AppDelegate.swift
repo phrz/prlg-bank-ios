@@ -53,7 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BankAPIDelegate {
 	}
 	
 	func didEncounterAccountsError(message: String) {
-		Logger.sharedInstance.log("didEncounterAccountsError: \(message)", sender: self, level: .Error)
+		Logger.sharedInstance.log("didEncounterAccountsError: \"\(message)\"", sender: self, level: .Error)
+		Logger.sharedInstance.log("Posting \(accountsErrorNotification)", sender: self)
 		NSNotificationCenter.defaultCenter().postNotificationName(
 			accountsErrorNotification,
 			object: self,
@@ -63,6 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BankAPIDelegate {
 	
 	func didLoadAccounts() {
 		Logger.sharedInstance.log("didLoadAccounts:", sender: self)
+		Logger.sharedInstance.log("Posting \(accountsLoadedNotification)", sender: self)
 		NSNotificationCenter.defaultCenter().postNotificationName(
 			accountsLoadedNotification,
 			object: self

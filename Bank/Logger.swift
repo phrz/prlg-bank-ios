@@ -43,8 +43,6 @@ struct LoggerItem: LoggerItemProtocol {
 			tempDesc += " \(message!)"
 		}
 		
-		tempDesc += "\n"
-		
 		return tempDesc
 	}
 }
@@ -100,7 +98,8 @@ class FileLocation: LoggerLocationProtocol {
 	
 	func logTo(itemContent: String) {
 		if let logFileHandle = logFileHandle {
-			let data = itemContent.dataUsingEncoding(NSUTF8StringEncoding)
+			let line = itemContent + "\n"
+			let data = line.dataUsingEncoding(NSUTF8StringEncoding)
 			logFileHandle.seekToEndOfFile()
 			logFileHandle.writeData(data!)
 		}

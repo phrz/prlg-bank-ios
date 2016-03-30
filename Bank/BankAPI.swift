@@ -25,13 +25,21 @@ class BankAPI {
 	
 	func authenticate(username username: String, password: String) {
 		
+		let pSafe = Array(count: password.characters.count, repeatedValue: "•").joinWithSeparator("")
+		
+		Logger.sharedInstance.log("authenticate: username:\"\(username)\" password: \"\(pSafe)\"", sender: self)
+		
 		guard !username.isEmpty else {
-			delegate?.didEncounterAuthError("The username is empty")
+			let error = "The username is empty"
+			Logger.sharedInstance.log(error, sender: self, level: .Error)
+			delegate?.didEncounterAuthError(error)
 			return
 		}
 		
 		guard !password.isEmpty else {
-			delegate?.didEncounterAuthError("The password is empty")
+			let error = "The password is empty"
+			Logger.sharedInstance.log(error, sender: self, level: .Error)
+			delegate?.didEncounterAuthError(error)
 			return
 		}
 		
@@ -51,6 +59,7 @@ class BankAPI {
 			let reqData: NSData = try NSJSONSerialization.dataWithJSONObject(params, options: NSJSONWritingOptions())
 			req.HTTPBody = reqData
 		} catch {
+			Logger.sharedInstance.log("Calling didEncounterAuthError on delegate (JSON Error)", sender: self)
 			delegate?.didEncounterAuthError("JSON error")
 		}
 		
@@ -60,6 +69,7 @@ class BankAPI {
 		let task = session.dataTaskWithRequest(req) { (data, res, err) in
 			// Handle connection errors
 			if let error = err {
+				Logger.sharedInstance.log("Calling didEncounterAuthError on delegate", sender: self)
 				Logger.sharedInstance.log(error.localizedDescription, sender: self, level: .Error)
 				self.delegate?.didEncounterAuthError(error.localizedDescription)
 				return
@@ -69,9 +79,11 @@ class BankAPI {
 			let httpRes = res as! NSHTTPURLResponse
 			
 			// Handle status codes
+			Logger.sharedInstance.log("Calling didReceiveAuthResults on delegate", sender: self)
 			self.delegate?.didReceiveAuthResults(withStatus: httpRes.statusCode)
 		}
 		
+		Logger.sharedInstance.log("Resuming authentication NSURLSessionDataTask", sender: self)
 		task.resume()
 	} // authenticate
 	
@@ -97,8 +109,6 @@ class BankAPI {
 			}
 			
 			// Parse the response body
-//			let dataString: NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
-			
 			do {
 				let json = try NSJSONSerialization
 					.JSONObjectWithData(data!, options: .AllowFragments)
@@ -115,10 +125,11 @@ class BankAPI {
 				Logger.sharedInstance.log("Error serializing JSON", sender: self, level: .Error)
 			}
 			
-			// Downcast NSURLResponse to NSHTTPResponse
-			//let httpRes = res as! NSHTTPURLResponse
+			Logger.sharedInstance.log("Calling delegate.didLoadAccounts:", sender: self)
 			self.delegate?.didLoadAccounts()
 		}
+		
+		Logger.sharedInstance.log("Resuming loadAccounts NSURLSessionDataTask", sender: self)
 		task.resume()
 	} // loadAccounts
 	
