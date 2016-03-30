@@ -61,14 +61,15 @@ class AccountDetailViewController: UITableViewController {
 	
 	override func viewDidLoad() {
 		Logger.sharedInstance.log("viewDidLoad:", sender: self)
+		
+		depositAmountField.delegate = moneyDelegate
+		withdrawAmountField.delegate = moneyDelegate
+		
 		NSOperationQueue.mainQueue().addOperationWithBlock() {
 			self.setTitle()
 			self.setAccountNumber()
 			self.setBalance()
 		}
-		
-		depositAmountField.delegate = moneyDelegate
-		withdrawAmountField.delegate = moneyDelegate
 	}
 	
 	func depositErrorCallback(notification: NSNotification) {
