@@ -17,6 +17,9 @@ protocol BankAPIDelegate: class {
 	
 	func didEncounterDepositError(message: String)
 	func didReceiveDepositResults(withStatus status: Int)
+	
+	func didEncounterWithdrawError(message: String)
+	func didReceiveWithdrawResults(withStatus status: Int)
 }
 
 class BankAPI {
@@ -202,5 +205,60 @@ class BankAPI {
 		Logger.sharedInstance.log("Resuming deposit NSURLSessionDataTask", sender: self)
 		task.resume()
 	} // deposit
+	
+	
+	func withdraw(amountValue: String, fromAccount account: String) {
+		let session = NSURLSession.sharedSession()
+		let authURI = NSURL(string: baseAPI + "/withdraw.php")
+		
+		Logger.sharedInstance.log("withdraw: amountValue:\(amountValue) fromAccount: \"\(account)\"", sender: self)
+		
+		// Validation
+		guard let amount = Double(stripMoneyString(amountValue)) else {
+			let error = "Cannot convert the given amountValue"
+			Logger.sharedInstance.log(error, sender: self, level: .Error)
+			delegate?.didEncounterWithdrawError(error)
+			return
+		}
+		
+		// Create the request with Accept and Content-Type headers, POST method
+		let req = NSMutableURLRequest(URL: authURI!)
+		req.setValue("application/json", forHTTPHeaderField: "Accept")
+		req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+		req.HTTPMethod = "POST"
+		
+		// Build parameter body
+		let params = ["amount": amount, "fromAccount": account, "nonce": self.nonce!]
+		
+		do {
+			let reqData: NSData = try NSJSONSerialization.dataWithJSONObject(params, options: NSJSONWritingOptions())
+			req.HTTPBody = reqData
+		} catch {
+			Logger.sharedInstance.log("Calling didEncounterWithdrawError on delegate (JSON Error)", sender: self)
+			delegate?.didEncounterWithdrawError("JSON error")
+		}
+		
+		// HTTP connection will be made asynchronously, so we're using the
+		// delegate (observer) pattern with callbacks to handle the result in
+		// a similarly async manner.
+		let task = session.dataTaskWithRequest(req) { (data, res, err) in
+			// Handle connection errors
+			if let error = err {
+				Logger.sharedInstance.log("Calling didEncounterWithdrawError on delegate", sender: self)
+				Logger.sharedInstance.log(error.localizedDescription, sender: self, level: .Error)
+				self.delegate?.didEncounterWithdrawError(error.localizedDescription)
+				return
+			}
+			
+			// Handle status codes
+			let httpRes = res as! NSHTTPURLResponse
+			
+			Logger.sharedInstance.log("Calling didReceiveWithdrawResults on delegate", sender: self)
+			self.delegate?.didReceiveWithdrawResults(withStatus: httpRes.statusCode)
+		}
+		
+		Logger.sharedInstance.log("Resuming withdraw NSURLSessionDataTask", sender: self)
+		task.resume()
+	} // withdraw
 	
 }

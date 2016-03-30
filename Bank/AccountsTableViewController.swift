@@ -58,6 +58,10 @@ class AccountsTableViewController: UITableViewController {
 		)
 	}
 	
+//	func removeObservers() {
+//		NSNotificationCenter.defaultCenter().removeObserver(self)
+//	}
+	
 	func accountsLoadedCallback() {
 		Logger.sharedInstance.log("accountsLoadedCallback:", sender: self)
 		reloadAccountsTableFromCache()
@@ -78,12 +82,14 @@ class AccountsTableViewController: UITableViewController {
 	
 	// DataSource methods
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+		Logger.sharedInstance.log("numberOfSectionsInTableView:", sender: self)
 		return 1
 	}
 	
 	override func tableView
 		(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
 	{
+		Logger.sharedInstance.log("tableView:numberOfRowsInSection:", sender: self)
 		return self.accounts.count
 	}
 	
@@ -91,6 +97,8 @@ class AccountsTableViewController: UITableViewController {
 		(tableView: UITableView,
 		 cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
 	{
+		Logger.sharedInstance.log("tableView:cellForRowAtIndexPath:", sender: self)
+		
 		let cell = tableView.dequeueReusableCellWithIdentifier("accountTableViewCell")
 		let account = self.accounts[indexPath.row]
 		
@@ -111,6 +119,8 @@ class AccountsTableViewController: UITableViewController {
 			
 			Logger.sharedInstance.log("Passing account instance data to account detail view", sender: self)
 			dest.accountNumber = detailAccount.number
+			
+//			self.removeObservers()
 		}
 	}
 }

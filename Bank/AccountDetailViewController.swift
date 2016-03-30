@@ -10,15 +10,16 @@ import UIKit
 
 class AccountDetailViewController: UITableViewController {
 	
-	var account: Account? {
+	var account: Account {
 		get {
-			if let accountNumber = self.accountNumber {
-				return self.appDelegate.api.accountsCache[accountNumber]
-			}
-			return nil
+			Logger.sharedInstance.log("Retrieving Account model for #\(accountNumber!)", sender: self)
+			let accountOrNil = self.appDelegate.api.accountsCache[self.accountNumber!]
+			return accountOrNil!
+		}
+		set {
+			Logger.sharedInstance.log("Cannot set account", sender: self, level: .Error)
 		}
 	}
-	
 	
 	var accountNumber: String?
 	
@@ -87,10 +88,14 @@ class AccountDetailViewController: UITableViewController {
 		Logger.sharedInstance.log("depositResultsCallback: \(status!)", sender: self)
 		
 		switch status as! Int {
-		case 409:
+		case 400: // Bad Request
 			displayTransactionError("Could not complete deposit.")
 		case 200:
-			Logger.sharedInstance.log("Reloading accounts information... (TODO)", sender: self)
+			Logger.sharedInstance.log("Reloading accounts information...", sender: self)
+			self.appDelegate.api.loadAccounts()
+			NSOperationQueue.mainQueue().addOperationWithBlock {
+				self.depositAmountField.text = ""
+			}
 		default:
 			Logger.sharedInstance.log(
 				"depositResultsCallback: Unexpected HTTP status code returned: \(status!)",
@@ -100,6 +105,48 @@ class AccountDetailViewController: UITableViewController {
 		}
 		
 		reenableDepositForm()
+	}
+	
+	func withdrawErrorCallback(notification: NSNotification) {
+		let info = notification.userInfo
+		let message = info!["message"] as! String
+		Logger.sharedInstance.log("withdrawErrorCallback: \"\(message)\"", sender: self, level: .Error)
+		
+		displayTransactionError(message)
+		
+		reenableDepositForm()
+	}
+	
+	func withdrawResultsCallback(notification: NSNotification) {
+		let info = notification.userInfo
+		let status = info!["status"]
+		
+		Logger.sharedInstance.log("withdrawResultsCallback: \(status!)", sender: self)
+		
+		switch status as! Int {
+		case 400: // Bad Request
+			displayTransactionError("Could not complete withdrawal.")
+		case 409: // Conflict
+			displayTransactionError("Insufficient funds to withdraw.")
+		case 200:
+			Logger.sharedInstance.log("Reloading accounts information...", sender: self)
+			self.appDelegate.api.loadAccounts()
+			NSOperationQueue.mainQueue().addOperationWithBlock {
+				self.withdrawAmountField.text = ""
+			}
+		default:
+			Logger.sharedInstance.log(
+				"withdrawResultsCallback: Unexpected HTTP status code returned: \(status!)",
+				sender: self,
+				level: .Error
+			)
+		}
+		
+		reenableWithdrawForm()
+	}
+	
+	func accountsLoadedCallback() {
+		Logger.sharedInstance.log("accountsLoadedCallback:", sender: self)
 		setTitle()
 		setBalance()
 	}
@@ -114,6 +161,18 @@ class AccountDetailViewController: UITableViewController {
 		}
 		
 		self.depositSubmitting = false
+	}
+	
+	func reenableWithdrawForm() {
+		// Make UI changes FROM MAIN THREAD
+		// (otherwise things like stopping the spinner
+		//  will take ages to update in the UI)
+		NSOperationQueue.mainQueue().addOperationWithBlock() {
+			self.withdrawSpinner.stopAnimating()
+			self.withdrawButton.enabled = true
+		}
+		
+		self.withdrawSubmitting = false
 	}
 	
 	func displayTransactionError(msg: String) {
@@ -155,6 +214,30 @@ class AccountDetailViewController: UITableViewController {
 			name: depositResultsNotification,
 			object: nil
 		)
+		
+		// Withdraw Error Observer
+		NSNotificationCenter.defaultCenter().addObserver(
+			self,
+			selector: #selector(AccountDetailViewController.withdrawErrorCallback),
+			name: withdrawErrorNotification,
+			object: nil
+		)
+		
+		// Withdraw Results Observer
+		NSNotificationCenter.defaultCenter().addObserver(
+			self,
+			selector: #selector(AccountDetailViewController.withdrawResultsCallback),
+			name: withdrawResultsNotification,
+			object: nil
+		)
+		
+		// Accounts Loaded Observer
+		NSNotificationCenter.defaultCenter().addObserver(
+			self,
+			selector: #selector(AccountDetailViewController.accountsLoadedCallback),
+			name: accountsLoadedNotification,
+			object: nil
+		)
 	}
 	
 	@IBAction func didTouchDepositButton(sender: AnyObject) {
@@ -190,9 +273,9 @@ class AccountDetailViewController: UITableViewController {
 		
 		// Submit the form with the BankAPIHandler
 		let amountValue = depositAmountField.text!
-		let toAccount = self.account!.number
+		let toAccount = self.account.number
 		
-		Logger.sharedInstance.log("Calling API to deposit $\(amountValue) to account \(toAccount)", sender: self)
+		Logger.sharedInstance.log("Calling API to deposit \(amountValue) to account \(toAccount)", sender: self)
 		
 		let api = self.appDelegate.api
 		api.deposit(amountValue, toAccount: toAccount)
@@ -216,21 +299,38 @@ class AccountDetailViewController: UITableViewController {
 		
 		// Start the spinner
 		withdrawSpinner.startAnimating()
+		
+		// Submit the form with the BankAPIHandler
+		let amountValue = withdrawAmountField.text!
+		let fromAccount = self.account.number
+		
+		Logger.sharedInstance.log("Calling API to withdraw \(amountValue) from account \(fromAccount)", sender: self)
+		
+		let api = self.appDelegate.api
+		api.withdraw(amountValue, fromAccount: fromAccount)
 	}
 	
 	private func setTitle() {
 		Logger.sharedInstance.log("Setting navbar title...", sender: self)
 		// Set navbar title dynamically based on account number
-		self.navigationController!.navigationBar.topItem!.title
-			= "#\(self.account!.number)"
+		NSOperationQueue.mainQueue().addOperationWithBlock { 
+			self.navigationController!.navigationBar.topItem!.title
+				= "#\(self.accountNumber!)"
+		}
 	}
 	
 	private func setAccountNumber() {
-		accountNumberLabel.text = "Account Number \(account!.number)"
+		Logger.sharedInstance.log("Setting hero account number...", sender: self)
+		NSOperationQueue.mainQueue().addOperationWithBlock {
+			self.accountNumberLabel.text = "Account Number \(self.accountNumber!)"
+		}
 	}
 	
 	private func setBalance() {
-		balanceLabel.text = String(format: "$%.2f", self.account!.balance)
+		Logger.sharedInstance.log("Setting balance...", sender: self)
+		NSOperationQueue.mainQueue().addOperationWithBlock {
+			self.balanceLabel.text = String(format: "$%.2f", self.account.balance)
+		}
 	}
 	
 }
