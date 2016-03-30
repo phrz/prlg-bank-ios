@@ -14,6 +14,7 @@
 		2741C5091CA82DB2000E5D11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2741C5071CA82DB2000E5D11 /* LaunchScreen.storyboard */; };
 		2741C5111CA83143000E5D11 /* UIFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2741C5101CA83143000E5D11 /* UIFormField.swift */; };
 		276987E81CAB242000EAB713 /* UIMoneyField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276987E71CAB242000EAB713 /* UIMoneyField.swift */; };
+		2795A8041CAC165B0054E146 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2795A8031CAC165B0054E146 /* Logger.swift */; };
 		27973C411CA8CF730066AEDA /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27973C401CA8CF730066AEDA /* LoginView.swift */; };
 		27973C431CA993180066AEDA /* AccountsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27973C421CA993180066AEDA /* AccountsTableViewController.swift */; };
 		27973C451CA9943F0066AEDA /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27973C441CA9943F0066AEDA /* Account.swift */; };
@@ -34,6 +35,7 @@
 		2741C50A1CA82DB2000E5D11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2741C5101CA83143000E5D11 /* UIFormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFormField.swift; sourceTree = "<group>"; };
 		276987E71CAB242000EAB713 /* UIMoneyField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIMoneyField.swift; sourceTree = "<group>"; };
+		2795A8031CAC165B0054E146 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		27973C401CA8CF730066AEDA /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		27973C421CA993180066AEDA /* AccountsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsTableViewController.swift; sourceTree = "<group>"; };
 		27973C441CA9943F0066AEDA /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 			children = (
 				27973C441CA9943F0066AEDA /* Account.swift */,
 				27F594D31CA834F800226331 /* BankAPI.swift */,
+				2795A8031CAC165B0054E146 /* Logger.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 				2741C5111CA83143000E5D11 /* UIFormField.swift in Sources */,
 				2741C4FF1CA82DB2000E5D11 /* AppDelegate.swift in Sources */,
 				27973C411CA8CF730066AEDA /* LoginView.swift in Sources */,
+				2795A8041CAC165B0054E146 /* Logger.swift in Sources */,
 				27F594D41CA834F800226331 /* BankAPI.swift in Sources */,
 				27973C451CA9943F0066AEDA /* Account.swift in Sources */,
 				276987E81CAB242000EAB713 /* UIMoneyField.swift in Sources */,
