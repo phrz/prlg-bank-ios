@@ -28,6 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BankAPIDelegate {
 		self.api = BankAPI()
 		super.init()
 		self.api.delegate = self
+		
+		Logger.sharedInstance.register(ConsoleLocation())
+		Logger.sharedInstance.register(FileLocation())
 	}
 	
 	func didEncounterAuthError(message: String) {
@@ -40,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BankAPIDelegate {
 	}
 	
 	func didReceiveAuthResults(withStatus status: Int) {
-		NSLog("didReceiveAuthResults: \(status)")
+		Logger.sharedInstance.log("didReceiveAuthResults: \(status)", sender: self)
 		NSNotificationCenter.defaultCenter().postNotificationName(
 			authResultsNotification,
 			object: self,

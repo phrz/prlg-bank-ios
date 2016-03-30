@@ -21,6 +21,10 @@ protocol LoggerItemProtocol {
 	func description() -> String
 }
 
+protocol LoggerLocationProtocol {
+	mutating func logTo(itemContent: String)
+}
+
 struct LoggerItem: LoggerItemProtocol {
 	let level: LoggerItemLevel
 	let message: String?
@@ -42,10 +46,52 @@ struct LoggerItem: LoggerItemProtocol {
 	}
 }
 
+struct ConsoleLocation: LoggerLocationProtocol {
+	func logTo(itemContent: String) {
+		print(itemContent)
+	}
+}
+
+struct FileLocation: LoggerLocationProtocol {
+	var logFilePath: String
+	// Defer file handle establishment until first use (lazy)
+	lazy var logFileHandle: NSFileHandle? = {
+		let logFileHandle = NSFileHandle.init(forWritingAtPath: self.logFilePath)
+		return logFileHandle
+	}()
+	
+	init() {
+		// Generate the file path
+		let dir: NSString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
+		self.logFilePath = dir.stringByAppendingPathComponent("log.txt")
+		// Create logfile if it doesn't exist
+		if(!NSFileManager.defaultManager().fileExistsAtPath(logFilePath)) {
+			print("Creating logfile...")
+			NSFileManager.defaultManager().createFileAtPath(logFilePath, contents: nil, attributes: nil)
+		} else {
+			print("logfile exists")
+		}
+	}
+	
+	mutating func logTo(itemContent: String) {
+		if let logFileHandle = logFileHandle {
+			let data = itemContent.dataUsingEncoding(NSUTF8StringEncoding)
+			logFileHandle.writeData(data!)
+		}
+	}
+}
+
 class Logger {
 	// Singleton (shared instance)
 	static let sharedInstance = Logger()
 	static let loggerIdentifier = "com.paulherz.Bank.Logger"
+	
+	var locations = [LoggerLocationProtocol]()
+	
+	// add a location to the locations array
+	func register(location: LoggerLocationProtocol) {
+		locations.append(location)
+	}
 	
 	// Instantiate the queue only upon first use
 	lazy var messageQueue: NSOperationQueue = {
@@ -64,7 +110,9 @@ class Logger {
 	// Enqueue a message into the log queue
 	func log(item: LoggerItemProtocol) {
 		self.messageQueue.addOperationWithBlock {
-			print( item.description() )
+			for var location in self.locations {
+				location.logTo(item.description())
+			}
 		}
 	}
 	
