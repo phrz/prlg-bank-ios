@@ -24,6 +24,9 @@ let depositResultsNotification = "com.paulherz.depositResultsNotificationKey"
 let withdrawErrorNotification = "com.paulherz.withdrawErrorNotificationKey"
 let withdrawResultsNotification = "com.paulherz.withdrawResultsNotificationKey"
 
+let transferErrorNotification = "com.paulherz.transferErrorNotificationKey"
+let transferResultsNotification = "com.paulherz.transferResultsNotificationKey"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, BankAPIDelegate {
 
@@ -108,6 +111,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BankAPIDelegate {
 		Logger.sharedInstance.log("didReceiveWithdrawResults:", sender: self)
 		NSNotificationCenter.defaultCenter().postNotificationName(
 			withdrawResultsNotification,
+			object: self,
+			userInfo: ["status": status]
+		)
+	}
+	
+	func didEncounterTransferError(message: String) {
+		Logger.sharedInstance.log("didEncounterTransferError:", sender: self)
+		NSNotificationCenter.defaultCenter().postNotificationName(
+			transferErrorNotification,
+			object: self,
+			userInfo: ["message": message]
+		)
+	}
+	
+	func didReceiveTransferResults(withStatus status: Int) {
+		Logger.sharedInstance.log("didReceiveTransferResults:", sender: self)
+		NSNotificationCenter.defaultCenter().postNotificationName(
+			transferResultsNotification,
 			object: self,
 			userInfo: ["status": status]
 		)

@@ -198,7 +198,7 @@ class AccountDetailViewController: UITableViewController {
 	}
 	
 	func addObservers() {
-		Logger.sharedInstance.log("Adding observers for Auth API events...", sender: self)
+		Logger.sharedInstance.log("Adding observers for Deposit/Withdraw API events...", sender: self)
 		
 		// Deposit Error Observer
 		NSNotificationCenter.defaultCenter().addObserver(

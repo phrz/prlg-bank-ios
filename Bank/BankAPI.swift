@@ -20,6 +20,9 @@ protocol BankAPIDelegate: class {
 	
 	func didEncounterWithdrawError(message: String)
 	func didReceiveWithdrawResults(withStatus status: Int)
+	
+	func didEncounterTransferError(message: String)
+	func didReceiveTransferResults(withStatus status: Int)
 }
 
 class BankAPI {
@@ -260,5 +263,61 @@ class BankAPI {
 		Logger.sharedInstance.log("Resuming withdraw NSURLSessionDataTask", sender: self)
 		task.resume()
 	} // withdraw
+	
+	
+	func transfer(amountValue: String, fromAccount: String, toAccount: String) {
+		let session = NSURLSession.sharedSession()
+		let authURI = NSURL(string: baseAPI + "/transfer.php")
+		
+		Logger.sharedInstance.log("transfer: amountValue:\(amountValue) fromAccount: \"\(fromAccount)\" toAccount: \"\(toAccount)\"", sender: self)
+		
+		// Validation
+		guard let amount = Double(stripMoneyString(amountValue)) else {
+			let error = "Cannot convert the given amountValue"
+			Logger.sharedInstance.log(error, sender: self, level: .Error)
+			delegate?.didEncounterTransferError(error)
+			return
+		}
+		
+		// Create the request with Accept and Content-Type headers, POST method
+		let req = NSMutableURLRequest(URL: authURI!)
+		req.setValue("application/json", forHTTPHeaderField: "Accept")
+		req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+		req.HTTPMethod = "POST"
+		
+		// Build parameter body
+		let params = ["amount": amount, "fromAccount": fromAccount, "toAccount": toAccount, "nonce": self.nonce!]
+		
+		do {
+			let reqData: NSData = try NSJSONSerialization.dataWithJSONObject(params, options: NSJSONWritingOptions())
+			req.HTTPBody = reqData
+		} catch {
+			Logger.sharedInstance.log("Calling didEncounterTransferError on delegate (JSON Error)", sender: self)
+			delegate?.didEncounterTransferError("JSON error")
+		}
+		
+		// HTTP connection will be made asynchronously, so we're using the
+		// delegate (observer) pattern with callbacks to handle the result in
+		// a similarly async manner.
+		let task = session.dataTaskWithRequest(req) { (data, res, err) in
+			// Handle connection errors
+			if let error = err {
+				Logger.sharedInstance.log("Calling didEncounterTransferError on delegate", sender: self)
+				Logger.sharedInstance.log(error.localizedDescription, sender: self, level: .Error)
+				self.delegate?.didEncounterTransferError(error.localizedDescription)
+				return
+			}
+			
+			// Handle status codes
+			let httpRes = res as! NSHTTPURLResponse
+			
+			Logger.sharedInstance.log("Calling didReceiveTransferResults on delegate", sender: self)
+			self.delegate?.didReceiveTransferResults(withStatus: httpRes.statusCode)
+		}
+		
+		Logger.sharedInstance.log("Resuming transfer NSURLSessionDataTask", sender: self)
+		task.resume()
+		
+	} // transfer
 	
 }

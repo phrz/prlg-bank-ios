@@ -217,11 +217,23 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="haL-h1-wrA">
                                                     <rect key="frame" x="18" y="7" width="57" height="30"/>
                                                     <state key="normal" title="Transfer"/>
+                                                    <connections>
+                                                        <action selector="didTouchTransferButton:" destination="rgB-rn-PHg" eventType="touchUpInside" id="B6U-kq-VJX"/>
+                                                    </connections>
                                                 </button>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="K4t-tk-gor">
+                                                    <rect key="frame" x="83" y="12" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="48l-Lk-YbB"/>
+                                                        <constraint firstAttribute="width" constant="20" id="R0p-89-5Gi"/>
+                                                    </constraints>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="haL-h1-wrA" firstAttribute="leading" secondItem="RQI-eI-jgy" secondAttribute="leadingMargin" constant="10" id="80r-3e-nqj"/>
+                                                <constraint firstItem="K4t-tk-gor" firstAttribute="centerY" secondItem="RQI-eI-jgy" secondAttribute="centerY" id="F79-Ye-eig"/>
                                                 <constraint firstItem="haL-h1-wrA" firstAttribute="centerY" secondItem="RQI-eI-jgy" secondAttribute="centerY" id="JWF-u7-WAF"/>
+                                                <constraint firstItem="K4t-tk-gor" firstAttribute="leading" secondItem="haL-h1-wrA" secondAttribute="trailing" constant="8" id="YW4-Ge-ded"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -242,6 +254,7 @@
                         <outlet property="toAccountPicker" destination="MkA-Jb-DEn" id="jKK-f8-8ky"/>
                         <outlet property="transferAmountField" destination="WtZ-bT-VYc" id="FGg-fY-diP"/>
                         <outlet property="transferButton" destination="haL-h1-wrA" id="9o2-xz-HdF"/>
+                        <outlet property="transferSpinner" destination="K4t-tk-gor" id="AUA-Pw-2f7"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f5h-qv-kja" userLabel="First Responder" sceneMemberID="firstResponder"/>
